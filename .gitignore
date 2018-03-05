@@ -1,0 +1,6 @@
+# Gradle ignores
+.gradle
+.settings
+
+# Build ignores
+build

@@ -1,0 +1,28 @@
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        // https://mvnrepository.com/artifact/org.springframework/spring-context
+        compile group: 'org.springframework', name: 'spring-context', version: '5.0.4.RELEASE'
+
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+    }
+}
+
+project(':evelyn-service') {
+    dependencies {
+        compile project(':api')
+        compile project(':repository:api')
+    }
+}
+
+project(":repository:$gradle.ext.storage") {
+    dependencies {
+        compile project(':repository:api')
+    }
+}
