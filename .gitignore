@@ -2,5 +2,9 @@
 .gradle
 .settings
 
+# IntelliJ ignores
+.idea
+*.iml
+
 # Build ignores
 build

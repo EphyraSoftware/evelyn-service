@@ -1,4 +1,4 @@
-package org.evelyn.services.user.data.mongo;
+package org.evelyn.services.user.data.mysql;
 
 import java.util.List;
 import java.util.ArrayList;

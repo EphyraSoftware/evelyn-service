@@ -1,8 +1,0 @@
-include 'api', 'evelyn-service', 'repository:api'
-
-// Dynamically load a storage implemenation
-def storage = hasProperty('storage') ? storage : 'mongo'
-include "repository:$storage"
-
-// Share the loaded property to be used in the build.
-gradle.ext.storage = storage

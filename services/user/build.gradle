@@ -14,15 +14,37 @@ subprojects {
     }
 }
 
-project(':evelyn-service') {
+project(':services:user:evelyn-service') {
     dependencies {
-        compile project(':api')
-        compile project(':repository:api')
+        compile project(':services:user:api')
+        compile project(':services:user:repository:api')
     }
 }
 
-project(":repository:$gradle.ext.storage") {
+if (gradle.ext.hasStorage) {
+    project(":services:user:repository:$gradle.ext.storage") {
+        dependencies {
+            compile project(':services:user:repository:api')
+        }
+    }
+}
+else {
+    project(":services:user:repository:mongo") {
+        dependencies {
+            compile project(':services:user:repository:api')
+        }
+    }
+
+    project(":services:user:repository:mysql") {
+        dependencies {
+            compile project(':services:user:repository:api')
+        }
+    }
+}
+
+project(':services:user:web-app') {
     dependencies {
-        compile project(':repository:api')
+        compile project(':services:user:api')
+        compile project(':services:user:repository:api')
     }
 }
