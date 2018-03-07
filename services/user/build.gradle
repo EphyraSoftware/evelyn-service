@@ -45,6 +45,14 @@ else {
 project(':services:user:web-app') {
     dependencies {
         compile project(':services:user:api')
-        compile project(':services:user:repository:api')
+
+        runtime project(':services:user:evelyn-service')
+
+        if (gradle.ext.hasStorage) {
+            runtime project(":services:user:repository:$gradle.ext.storage")
+        }
+        else {
+            runtime project(":services:user:repository:mongo")
+        }
     }
 }
