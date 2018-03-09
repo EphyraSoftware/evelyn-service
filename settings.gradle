@@ -17,3 +17,6 @@ else {
 gradle.ext.storage = storage
 gradle.ext.hasStorage = hasStorage
 /////////////////////// END: USER SERVICE ///////////////////////
+
+// Monolith server
+include 'server:evelyn-monolith'

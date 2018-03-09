@@ -3,14 +3,8 @@ plugins {
     id 'java'
 }
 
-// Re-enable the jar task which the boot plugin sub-classes and hides.
-jar {
-    enabled = true
-}
-
-// Ensures the jar and bootJar don't clash.
-bootJar {
-    classifier = 'boot'
+repositories {
+    jcenter()
 }
 
 dependencies {
@@ -18,4 +12,6 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.0.RELEASE'
 
     compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.0.0.RELEASE'
+
+    runtime project(':services:user:web-app')
 }
