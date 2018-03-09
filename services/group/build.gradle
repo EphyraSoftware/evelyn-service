@@ -1,0 +1,64 @@
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        // https://mvnrepository.com/artifact/org.springframework/spring-context
+        compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
+
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+    }
+}
+
+project(':services:group:evelyn-service') {
+    dependencies {
+        compile project(':services:group:api')
+        compile project(':services:group:repository:api')
+    }
+}
+
+if (gradle.ext.hasStorage) {
+    project(":services:group:repository:$gradle.ext.storage") {
+        dependencies {
+            compile project(':services:group:repository:api')
+        }
+    }
+}
+else {
+    project(":services:group:repository:mongo") {
+        dependencies {
+            compile project(':services:group:repository:api')
+        }
+    }
+
+    project(":services:group:repository:mysql") {
+        dependencies {
+            compile project(':services:group:repository:api')
+        }
+    }
+}
+
+project(':services:group:rest-api') {
+    dependencies {
+        compile project(':services:group:api')
+
+        runtime project(':services:group:evelyn-service')
+
+        if (gradle.ext.hasStorage) {
+            runtime project(":services:group:repository:$gradle.ext.storage")
+        }
+        else {
+            runtime project(":services:group:repository:mongo")
+        }
+    }
+}
+
+project(':services:group:web-app') {
+    dependencies {
+        runtime project(':services:group:rest-api')
+    }
+}

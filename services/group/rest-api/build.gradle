@@ -1,0 +1,4 @@
+dependencies {
+    // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
+    compile group: 'org.springframework', name: 'spring-webmvc', version: "${rootProject.springFrameworkVersion}"
+}
