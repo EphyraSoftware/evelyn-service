@@ -18,15 +18,15 @@ public class EvelynGroupService implements GroupService {
 
     @Override
     public List<GroupMessage> getGroups() {
-        List<Group> users = userDataService.getUsers();
+        List<Group> groups = userDataService.getGroups();
 
         // Do some work.
         
-        return users.stream().map(user -> {
-            GroupMessage userMessage = new GroupMessage();
-            userMessage.setName(user.getName());
+        return groups.stream().map(group -> {
+            GroupMessage groupMessage = new GroupMessage();
+            groupMessage.setName(group.getName());
 
-            return userMessage;
+            return groupMessage;
         }).collect(Collectors.toList());
     }
 }

@@ -10,17 +10,17 @@ import org.evelyn.services.group.data.api.model.Group;
 
 @Service
 public class MySqlGroupData implements GroupDataService {
-    public List<Group> getUsers() {
-        List<Group> users = new ArrayList<>();
+    public List<Group> getGroups() {
+        List<Group> groups = new ArrayList<>();
 
-        Group fooUser = new Group();
-        fooUser.setName("foo-group-mysql");
-        users.add(fooUser);
+        Group fooGroup = new Group();
+        fooGroup.setName("foo-group-mysql");
+        groups.add(fooGroup);
 
-        Group barUser = new Group();
-        barUser.setName("bar-group-mysql");
-        users.add(barUser);
+        Group barGroup = new Group();
+        barGroup.setName("bar-group-mysql");
+        groups.add(barGroup);
 
-        return users;
+        return groups;
     }
 }
