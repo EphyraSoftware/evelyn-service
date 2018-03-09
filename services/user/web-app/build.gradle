@@ -1,16 +1,5 @@
 plugins {
     id 'org.springframework.boot' version '2.0.0.RELEASE'
-    id 'java'
-}
-
-// Re-enable the jar task which the boot plugin sub-classes and hides.
-jar {
-    enabled = true
-}
-
-// Ensures the jar and bootJar don't clash.
-bootJar {
-    classifier = 'boot'
 }
 
 dependencies {

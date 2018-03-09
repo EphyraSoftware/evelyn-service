@@ -1,0 +1,8 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.4.RELEASE'
+}

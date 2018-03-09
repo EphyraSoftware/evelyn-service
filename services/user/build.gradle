@@ -42,10 +42,15 @@ else {
     }
 }
 
-project(':services:user:web-app') {
+project(':services:user:rest-api') {
     dependencies {
         compile project(':services:user:api')
+    }
+}
 
+project(':services:user:web-app') {
+    dependencies {
+        runtime project(':services:user:rest-api')
         runtime project(':services:user:evelyn-service')
 
         if (gradle.ext.hasStorage) {
