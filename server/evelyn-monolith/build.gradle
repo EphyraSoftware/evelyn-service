@@ -1,4 +1,5 @@
 plugins {
+    // TODO Can only use literals in this block... Want to set version with variable.
     id 'org.springframework.boot' version '2.0.0.RELEASE'
     id 'java'
 }
@@ -9,9 +10,9 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${rootProject.springBootVersion}"
 
-    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.0.0.RELEASE'
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
 
     runtime project(':services:user:rest-api')
 }

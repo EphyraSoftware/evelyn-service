@@ -7,10 +7,10 @@ subprojects {
 
     dependencies {
         // https://mvnrepository.com/artifact/org.springframework/spring-context
-        compile group: 'org.springframework', name: 'spring-context', version: '5.0.4.RELEASE'
+        compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
 
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
     }
 }
 

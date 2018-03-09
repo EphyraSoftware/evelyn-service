@@ -1,0 +1,5 @@
+ext {
+    springFrameworkVersion = '5.0.4.RELEASE'
+    springBootVersion = '2.0.0.RELEASE'
+    lombokVersion = '1.16.20'
+}
