@@ -21,3 +21,6 @@ gradle.ext.hasStorage = hasStorage
 
 // Monolith server
 include 'server:evelyn-monolith'
+
+// Entry point (proxy)
+include 'server:evelyn-web-entry-point'

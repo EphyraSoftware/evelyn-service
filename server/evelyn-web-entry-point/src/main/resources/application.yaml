@@ -1,0 +1,11 @@
+zuul:
+  routes:
+    users:
+      path: /users/**
+      url: http://localhost:8081/users
+    groups:
+      path: /groups/**
+      url: http://localhost:8082/groups
+
+server:
+  port: 5000
