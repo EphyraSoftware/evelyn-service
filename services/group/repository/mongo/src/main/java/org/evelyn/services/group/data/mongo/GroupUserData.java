@@ -10,15 +10,21 @@ import org.evelyn.services.group.data.api.model.Group;
 
 @Service
 public class GroupUserData implements GroupDataService {
+    @Override
     public List<Group> getGroups() {
         List<Group> groups = new ArrayList<>();
 
         Group fooGroup = new Group();
-        fooGroup.setName("foo-group-mongo");
+        fooGroup.setName("foo-group");
+        fooGroup.setUserList(new ArrayList<>());
+        fooGroup.getUserList().add("asdlfkj9898fslkdfajsdf98");
+        fooGroup.getUserList().add("sdfsfd98sflkjdsf09fsdf89");
         groups.add(fooGroup);
 
         Group barGroup = new Group();
-        barGroup.setName("bar-group-mongo");
+        barGroup.setName("bar-group");
+        barGroup.setUserList(new ArrayList<>());
+        barGroup.getUserList().add("asdf098sfolkj34dlkj23409");
         groups.add(barGroup);
 
         return groups;

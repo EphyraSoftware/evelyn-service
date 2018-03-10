@@ -6,4 +6,5 @@ import org.evelyn.services.user.data.api.model.User;
 
 public interface UserDataService {
     List<User> getUsers();
+    User getUser(String userId);
 }

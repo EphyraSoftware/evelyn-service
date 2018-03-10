@@ -18,6 +18,8 @@ project(':services:group:evelyn-service') {
     dependencies {
         compile project(':services:group:api')
         compile project(':services:group:repository:api')
+
+        compile project(':services:user:api')
     }
 }
 
