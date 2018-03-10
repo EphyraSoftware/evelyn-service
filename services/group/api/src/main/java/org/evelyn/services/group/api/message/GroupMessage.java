@@ -1,8 +1,9 @@
 package org.evelyn.services.group.api.message;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GroupMessage {
+public class GroupMessage implements Serializable {
     private String name;
     private List<GroupUserMessage> users;
 

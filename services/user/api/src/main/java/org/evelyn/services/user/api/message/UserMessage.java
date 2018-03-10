@@ -1,6 +1,8 @@
 package org.evelyn.services.user.api.message;
 
-public class UserMessage {
+import java.io.Serializable;
+
+public class UserMessage implements Serializable {
     private String id;
     private String email;
 

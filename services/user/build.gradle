@@ -59,6 +59,8 @@ project(':services:user:rest-api') {
 
 project(':services:user:web-app') {
     dependencies {
+        compile project(':services:user:api')
+        runtime project(':services:user:evelyn-service')
         runtime project(':services:user:rest-api')
     }
 }
