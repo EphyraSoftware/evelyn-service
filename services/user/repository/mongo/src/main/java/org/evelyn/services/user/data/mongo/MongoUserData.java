@@ -1,43 +1,36 @@
 package org.evelyn.services.user.data.mongo;
 
-import java.util.List;
-import java.util.ArrayList;
-
-import org.springframework.stereotype.Service;
-
 import org.evelyn.services.user.data.api.UserDataService;
 import org.evelyn.services.user.data.api.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.stereotype.Service;
 
 @Service
+@EnableMongoRepositories(basePackages = "org.evelyn.services.user.data.mongo")
 public class MongoUserData implements UserDataService {
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
-    public List<User> getUsers() {
-        List<User> users = new ArrayList<>();
-        users.add(getUser("asdlfkj9898fslkdfajsdf98"));
-        users.add(getUser("sdfsfd98sflkjdsf09fsdf89"));
-        users.add(getUser("asdf098sfolkj34dlkj23409"));
-        return users;
+    public void createUser(User user) {
+        org.evelyn.services.user.data.mongo.User userDocument = new org.evelyn.services.user.data.mongo.User();
+        userDocument.userId = user.getId();
+        userDocument.email = user.getEmail();
+
+        userRepository.insert(userDocument);
     }
 
     @Override
     public User getUser(String userId) {
-        String email = null;
-        switch (userId) {
-            case "asdlfkj9898fslkdfajsdf98":
-                email = "foo@evelyn.com";
-                break;
-            case "sdfsfd98sflkjdsf09fsdf89":
-                email = "bar@evelyn.com";
-                break;
-            case "asdf098sfolkj34dlkj23409":
-                email = "foobar@evelyn.com";
-                break;
+        org.evelyn.services.user.data.mongo.User byUserId = userRepository.findByUserId(userId);
+        if (byUserId == null) {
+            return null;
         }
 
         User user = new User();
-        user.setEmail(email);
-        user.setId(userId);
-
+        user.setId(byUserId.userId);
+        user.setEmail(byUserId.email);
         return user;
     }
 }

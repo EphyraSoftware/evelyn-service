@@ -1,8 +1,11 @@
 rootProject.name = 'evelyn-service'
 
-include 'services:user:api', 'services:user:evelyn-service', 'services:user:repository:api', 'services:user:rest-api', 'services:user:web-app'
-include 'services:group:api', 'services:group:evelyn-service', 'services:group:repository:api', 'services:group:rest-api', 'services:group:web-app'
+include 'services:user:api', 'services:user:evelyn-service', 'services:user:repository:api',
+        'services:user:rest-api', 'services:user:web-app', 'services:user:repository:mongo'
+include 'services:group:api', 'services:group:evelyn-service', 'services:group:repository:api',
+        'services:group:rest-api', 'services:group:web-app', 'services:group:repository:mongo'
 
+/*
 // Dynamically load a storage implementation
 def hasStorage = hasProperty('storage')
 def storage = hasStorage ? storage : 'mongo'
@@ -18,6 +21,7 @@ else {
 // Share the loaded property to be used in the build.
 gradle.ext.storage = storage
 gradle.ext.hasStorage = hasStorage
+*/
 
 // Monolith server
 include 'server:evelyn-monolith'

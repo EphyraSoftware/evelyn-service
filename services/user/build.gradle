@@ -21,24 +21,9 @@ project(':services:user:evelyn-service') {
     }
 }
 
-if (gradle.ext.hasStorage) {
-    project(":services:user:repository:$gradle.ext.storage") {
-        dependencies {
-            compile project(':services:user:repository:api')
-        }
-    }
-}
-else {
-    project(":services:user:repository:mongo") {
-        dependencies {
-            compile project(':services:user:repository:api')
-        }
-    }
-
-    project(":services:user:repository:mysql") {
-        dependencies {
-            compile project(':services:user:repository:api')
-        }
+project(":services:user:repository:mongo") {
+    dependencies {
+        compile project(':services:user:repository:api')
     }
 }
 
@@ -47,20 +32,13 @@ project(':services:user:rest-api') {
         compile project(':services:user:api')
 
         runtime project(':services:user:evelyn-service')
-
-        if (gradle.ext.hasStorage) {
-            runtime project(":services:user:repository:$gradle.ext.storage")
-        }
-        else {
-            runtime project(":services:user:repository:mongo")
-        }
+        runtime project(":services:user:repository:mongo")
     }
 }
 
 project(':services:user:web-app') {
     dependencies {
         compile project(':services:user:api')
-        runtime project(':services:user:evelyn-service')
         runtime project(':services:user:rest-api')
     }
 }

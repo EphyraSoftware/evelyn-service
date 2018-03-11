@@ -1,6 +1,7 @@
 package org.evelyn.services.user;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -17,18 +18,15 @@ public class EvelynUserService implements UserService {
     private UserDataService userDataService;
 
     @Override
-    public List<UserMessage> getUsers() {
-        List<User> users = userDataService.getUsers();
+    public UserMessage createUser(UserMessage userMessage) {
+        userMessage.setId(UUID.randomUUID().toString());
 
-        // Do some work.
+        User user = new User();
+        user.setId(userMessage.getId());
+        user.setEmail(userMessage.getEmail());
+        userDataService.createUser(user);
 
-        return users.stream().map(user -> {
-            UserMessage userMessage = new UserMessage();
-            userMessage.setId(user.getId());
-            userMessage.setEmail(user.getEmail());
-
-            return userMessage;
-        }).collect(Collectors.toList());
+        return userMessage;
     }
 
     @Override

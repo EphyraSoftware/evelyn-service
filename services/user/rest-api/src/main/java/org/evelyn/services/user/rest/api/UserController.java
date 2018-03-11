@@ -12,10 +12,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ResponseBody
-    public List<UserMessage> getUsers() {
-        return userService.getUsers();
+    public UserMessage getUsers(@RequestBody UserMessage userMessage) {
+        return userService.createUser(userMessage);
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)

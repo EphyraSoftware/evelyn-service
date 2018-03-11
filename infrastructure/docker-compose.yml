@@ -1,0 +1,9 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - 9081:27017
+    # Doesn't work on Windows
+    #volumes:
+    #  - ./data/db:/data/db
