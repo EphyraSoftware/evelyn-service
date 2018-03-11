@@ -14,7 +14,7 @@ import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 @SpringBootApplication
 @ComponentScan("org.evelyn.services.group")
 public class WebApp {
-    @Value("services.user.url")
+    @Value("${services.user.url}")
     private String userServiceUrl;
 
     @Bean(name = "/groupServiceExporter")
