@@ -13,6 +13,6 @@ public class RabbitUserMessaging implements UserMessaging {
 
     @Override
     public void sendUserCreated(UserCreatedMessage userCreatedMessage) {
-        rabbitTemplate.convertAndSend(userCreatedMessage);
+        rabbitTemplate.convertAndSend(UserMessaging.USER_CREATED_QUEUE_NAME, userCreatedMessage);
     }
 }
