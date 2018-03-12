@@ -1,21 +1,19 @@
 package org.evelyn.services.group;
 
+import org.evelyn.services.group.api.GroupService;
+import org.evelyn.services.group.api.message.GroupMessage;
+import org.evelyn.services.group.api.message.GroupUserMessage;
+import org.evelyn.services.group.data.api.GroupDataService;
+import org.evelyn.services.group.data.api.model.Group;
+import org.evelyn.services.user.api.UserService;
+import org.evelyn.services.user.api.message.UserMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import org.evelyn.services.group.api.message.GroupUserMessage;
-import org.evelyn.services.user.api.UserService;
-import org.evelyn.services.user.api.message.UserMessage;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.evelyn.services.group.api.GroupService;
-import org.evelyn.services.group.api.message.GroupMessage;
-import org.evelyn.services.group.data.api.GroupDataService;
-import org.evelyn.services.group.data.api.model.Group;
 
 @Service
 public class EvelynGroupService implements GroupService {

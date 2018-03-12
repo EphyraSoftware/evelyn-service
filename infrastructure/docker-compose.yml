@@ -7,3 +7,8 @@ services:
     # Doesn't work on Windows
     #volumes:
     #  - ./data/db:/data/db
+  rabbitmq:
+    image: rabbitmq:3.7-rc-management
+    ports:
+      - 9082:5672
+      - 6001:15672 # Management console

@@ -1,27 +1,10 @@
 rootProject.name = 'evelyn-service'
 
 include 'services:user:api', 'services:user:evelyn-service', 'services:user:repository:api',
-        'services:user:rest-api', 'services:user:web-app', 'services:user:repository:mongo'
+        'services:user:rest-api', 'services:user:web-app', 'services:user:repository:mongo',
+        'services:user:messaging:api', 'services:user:messaging:rabbit'
 include 'services:group:api', 'services:group:evelyn-service', 'services:group:repository:api',
         'services:group:rest-api', 'services:group:web-app', 'services:group:repository:mongo'
-
-/*
-// Dynamically load a storage implementation
-def hasStorage = hasProperty('storage')
-def storage = hasStorage ? storage : 'mongo'
-if (hasStorage) {
-    include "services:user:repository:$storage"
-    include "services:group:repository:$storage"
-}
-else {
-    include 'services:user:repository:mongo', 'services:user:repository:mysql'
-    include 'services:group:repository:mongo', 'services:group:repository:mysql'
-}
-
-// Share the loaded property to be used in the build.
-gradle.ext.storage = storage
-gradle.ext.hasStorage = hasStorage
-*/
 
 // Monolith server
 include 'server:evelyn-monolith'

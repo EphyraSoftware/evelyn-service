@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.evelyn.services.user.messaging.api.UserMessaging;
+import org.evelyn.services.user.messaging.api.model.UserCreatedMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +19,9 @@ public class EvelynUserService implements UserService {
     @Autowired
     private UserDataService userDataService;
 
+    @Autowired
+    private UserMessaging userMessaging;
+
     @Override
     public UserMessage createUser(UserMessage userMessage) {
         userMessage.setId(UUID.randomUUID().toString());
@@ -25,6 +30,10 @@ public class EvelynUserService implements UserService {
         user.setId(userMessage.getId());
         user.setEmail(userMessage.getEmail());
         userDataService.createUser(user);
+
+        UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
+        userCreatedMessage.email = userMessage.getEmail();
+        userMessaging.sendUserCreated(userCreatedMessage);
 
         return userMessage;
     }
