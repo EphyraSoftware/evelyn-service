@@ -1,5 +1,7 @@
 rootProject.name = 'evelyn-service'
 
+include 'services:email:api', 'services:email:evelyn-service', 'services:email:messaging:api',
+        'services:email:messaging:rabbit', 'services:email:web-app'
 include 'services:user:api', 'services:user:evelyn-service', 'services:user:repository:api',
         'services:user:rest-api', 'services:user:web-app', 'services:user:repository:mongo',
         'services:user:messaging:api', 'services:user:messaging:rabbit'

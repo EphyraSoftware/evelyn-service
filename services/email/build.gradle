@@ -1,0 +1,34 @@
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        jcenter()
+    }
+}
+
+project(':services:email:api') {
+    dependencies {
+        compile project(':services:user:messaging:api')
+    }
+}
+
+project(':services:email:evelyn-service') {
+    dependencies {
+        compile project(':services:email:api')
+        compile project(':services:user:messaging:api')
+    }
+}
+
+project(':services:email:messaging:rabbit') {
+    dependencies {
+        compile project(':services:email:api')
+        compile project(':services:email:messaging:api')
+    }
+}
+
+project(':services:email:web-app') {
+    dependencies {
+        runtime project(':services:email:evelyn-service')
+        runtime project(':services:email:messaging:rabbit')
+    }
+}
