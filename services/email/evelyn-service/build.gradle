@@ -1,4 +1,10 @@
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
+
+    // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
+    compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.1'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-context-support
+    compile group: 'org.springframework', name: 'spring-context-support', version: "${rootProject.springFrameworkVersion}"
 }

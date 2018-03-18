@@ -12,3 +12,21 @@ services:
     ports:
       - 9082:5672
       - 6001:15672 # Management console
+  email:
+    # To connect from Thunderbird use
+    # address 'username@localhost'
+    # password 'username@localhost'
+    # server 'localhost'
+    # (incoming) pop3 port '3110'
+    # (outgoing) smtp port '3025'
+    image: greenmail/standalone:1.5.7
+    environment:
+      - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.verbose -Dgreenmail.users=evelyn-mailer:secret
+      - JAVA_OPTS=-Djava.net.preferIPv4Stack=true -Xmx512m
+    ports:
+      - 3025:3025
+      - 3110:3110
+      - 3143:3143
+      - 3465:3465
+      - 3993:3993
+      - 3995:3995
