@@ -1,22 +1,20 @@
 package org.evelyn.services.user;
 
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.evelyn.services.user.api.message.ConfirmRegistrationMessage;
-import org.evelyn.services.user.data.api.model.UserRegistration;
-import org.evelyn.services.user.messaging.api.UserMessaging;
-import org.evelyn.services.user.messaging.api.model.UserCreatedMessage;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.evelyn.services.user.api.UserService;
+import org.evelyn.services.user.api.message.ConfirmRegistrationMessage;
 import org.evelyn.services.user.api.message.UserMessage;
 import org.evelyn.services.user.data.api.UserDataService;
 import org.evelyn.services.user.data.api.model.User;
+import org.evelyn.services.user.data.api.model.UserRegistration;
+import org.evelyn.services.user.messaging.api.UserMessaging;
+import org.evelyn.services.user.messaging.api.model.UserCreatedMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.util.Base64;
+import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class EvelynUserService implements UserService {
@@ -29,6 +27,7 @@ public class EvelynUserService implements UserService {
     @Override
     public void registerUser(UserMessage userMessage) {
         UserRegistration userRegistration = new UserRegistration();
+        userRegistration.setExpiry(new Timestamp(new Date().getTime()).getTime() + 24 * 60 * 60);
         userRegistration.setEmail(userMessage.getEmail());
         userRegistration.setUserHandle(userMessage.getHandle());
         userRegistration.setConfirmKey(
@@ -38,6 +37,7 @@ public class EvelynUserService implements UserService {
 
         UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
         userCreatedMessage.email = userMessage.getEmail();
+        userCreatedMessage.confirmKey = userRegistration.getConfirmKey();
         userMessaging.sendUserCreated(userCreatedMessage);
     }
 
@@ -50,7 +50,7 @@ public class EvelynUserService implements UserService {
             return null;
         }
 
-        Date now = new Date();
+        Long now = new Timestamp(new Date().getTime()).getTime();
         if (now.compareTo(userRegistration.getExpiry()) >= 0) {
             // The expiry has passed, can't confirm.
             // TODO remove the registration record from the database.

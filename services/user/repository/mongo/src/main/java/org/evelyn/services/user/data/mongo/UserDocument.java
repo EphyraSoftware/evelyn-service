@@ -11,7 +11,7 @@ public class UserDocument {
     public String id;
 
     public String userId;
-    public String userName;
+    public String handle;
     public String email;
     public Date dateCreated;
 
@@ -20,7 +20,7 @@ public class UserDocument {
         return "UserDocument{" +
                 "id='" + id + '\'' +
                 ", userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
+                ", handle='" + handle + '\'' +
                 ", email='" + email + '\'' +
                 ", dateCreated=" + dateCreated +
                 '}';

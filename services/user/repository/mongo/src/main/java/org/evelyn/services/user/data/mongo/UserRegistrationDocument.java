@@ -10,7 +10,7 @@ public class UserRegistrationDocument {
     @Id
     public String id;
 
-    public Date expiry;
+    public Long expiry;
     public String confirmKey;
     public String email;
     public String userHandle;

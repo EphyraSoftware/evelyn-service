@@ -4,4 +4,5 @@ import java.io.Serializable;
 
 public class UserCreatedMessage implements Serializable {
     public String email;
+    public String confirmKey;
 }

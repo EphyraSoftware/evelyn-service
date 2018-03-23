@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class UserRegistration {
-    private Date expiry;
+    private Long expiry;
     private String confirmKey;
     private String email;
     private String userHandle;

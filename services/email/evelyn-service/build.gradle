@@ -7,4 +7,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-context-support
     compile group: 'org.springframework', name: 'spring-context-support', version: "${rootProject.springFrameworkVersion}"
+
+    // https://mvnrepository.com/artifact/org.freemarker/freemarker
+    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.27-incubating'
 }

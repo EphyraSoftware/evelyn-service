@@ -1,29 +1,49 @@
 package org.evelyn.services.email;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.evelyn.services.email.api.EmailService;
 import org.evelyn.services.user.messaging.api.model.UserCreatedMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import java.util.Properties;
+import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 class EvelynEmailService implements EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private Configuration freeMarkerConfiguration;
+
     @Override
     public void onUserCreated(UserCreatedMessage userMessage) {
         try {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(userMessage.email);
-            mailMessage.setSubject("Welcome to Evelyn");
-            mailMessage.setText("Thanks for signing up, please click on the link which doesn't exist to confirm your sign up.");
-            mailSender.send(mailMessage);
+            MimeMessagePreparator preparator = new MimeMessagePreparator() {
+                @Override
+                public void prepare(MimeMessage mimeMessage) throws Exception {
+                    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+
+                    messageHelper.setTo(userMessage.email);
+                    messageHelper.setSubject("Welcome to Evelyn");
+
+                    Template template = freeMarkerConfiguration.getTemplate("sign-up-template.ftl");
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("confirmKey", userMessage.confirmKey);
+                    String processedTemplate = FreeMarkerTemplateUtils.processTemplateIntoString(template, params);
+
+                    messageHelper.setText(processedTemplate, true);
+                }
+            };
+
+            mailSender.send(preparator);
         }
         catch (Exception e) {
             System.out.println("Failed to send email");

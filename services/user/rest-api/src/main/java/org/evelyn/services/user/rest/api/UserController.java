@@ -14,19 +14,15 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/users/register", method = RequestMethod.POST)
-    public void getUsers(@RequestBody UserMessage userMessage) {
+    public void register(@RequestBody UserMessage userMessage) {
         userService.registerUser(userMessage);
     }
 
-    @RequestMapping(value = "/users/confirm", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/confirm", method = RequestMethod.GET)
     @ResponseBody
-    public UserMessage getUsers(@RequestBody ConfirmRegistrationMessage confirmRegistrationMessage) {
+    public UserMessage confirm(@RequestParam("token") String token) {
+        ConfirmRegistrationMessage confirmRegistrationMessage = new ConfirmRegistrationMessage();
+        confirmRegistrationMessage.setConfirmKey(token);
         return userService.confirmRegistration(confirmRegistrationMessage);
-    }
-
-    @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    @ResponseBody
-    public UserMessage getUser(@PathVariable("userId") String userId) {
-        return userService.getUser(userId);
     }
 }

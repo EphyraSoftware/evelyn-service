@@ -48,6 +48,7 @@ public class MongoUserData implements UserDataService {
         UserDocument userDocument = new UserDocument();
         userDocument.dateCreated = user.getDateCreated();
         userDocument.email = user.getEmail();
+        userDocument.handle = user.getHandle();
 
         userRepository.insert(userDocument);
     }
