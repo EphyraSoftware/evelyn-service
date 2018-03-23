@@ -5,9 +5,9 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class User {
-    private String id;
+public class UserRegistration {
+    private Date expiry;
+    private String confirmKey;
     private String email;
-    private Date dateCreated;
-    private String handle;
+    private String userHandle;
 }

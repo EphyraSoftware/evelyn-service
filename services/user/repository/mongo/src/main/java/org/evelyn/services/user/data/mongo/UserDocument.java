@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Document
-public class User {
+public class UserDocument {
     @Id
     public String id;
 
@@ -17,7 +17,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDocument{" +
                 "id='" + id + '\'' +
                 ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +

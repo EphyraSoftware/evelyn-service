@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class UserMessage implements Serializable {
     private String id;
     private String email;
+    private String handle;
 
     public String getEmail() {
         return email;
@@ -20,5 +21,13 @@ public class UserMessage implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getHandle() {
+        return handle;
+    }
+
+    public void setHandle(String handle) {
+        this.handle = handle;
     }
 }

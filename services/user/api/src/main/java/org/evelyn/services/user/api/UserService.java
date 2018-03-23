@@ -2,10 +2,13 @@ package org.evelyn.services.user.api;
 
 import java.util.List;
 
+import org.evelyn.services.user.api.message.ConfirmRegistrationMessage;
 import org.evelyn.services.user.api.message.UserMessage;
 
 public interface UserService {
-    UserMessage createUser(UserMessage userMessage);
+    void registerUser(UserMessage userMessage);
+
+    UserMessage confirmRegistration(ConfirmRegistrationMessage confirmRegistrationMessage);
 
     UserMessage getUser(String userId);
 }

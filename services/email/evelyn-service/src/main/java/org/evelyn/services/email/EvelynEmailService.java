@@ -22,7 +22,7 @@ class EvelynEmailService implements EmailService {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(userMessage.email);
             mailMessage.setSubject("Welcome to Evelyn");
-            mailMessage.setText("Thanks for signing up, please click on the link which doesn't exist confirm your sign up.");
+            mailMessage.setText("Thanks for signing up, please click on the link which doesn't exist to confirm your sign up.");
             mailSender.send(mailMessage);
         }
         catch (Exception e) {

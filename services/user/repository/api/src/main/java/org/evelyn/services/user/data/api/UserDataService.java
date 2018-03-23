@@ -1,8 +1,12 @@
 package org.evelyn.services.user.data.api;
 
 import org.evelyn.services.user.data.api.model.User;
+import org.evelyn.services.user.data.api.model.UserRegistration;
 
 public interface UserDataService {
-    void createUser(User user);
+    void saveUserRegistration(UserRegistration userRegistration);
+    UserRegistration lookupRegistration(String confirmKey);
+    void saveUser(User user);
     User getUser(String userId);
+
 }
