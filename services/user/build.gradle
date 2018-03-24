@@ -22,6 +22,12 @@ project(':services:user:evelyn-service') {
     }
 }
 
+project(":services:user:repository:api") {
+    dependencies {
+        compile project(':services:user:api')
+    }
+}
+
 project(":services:user:repository:mongo") {
     dependencies {
         compile project(':services:user:repository:api')

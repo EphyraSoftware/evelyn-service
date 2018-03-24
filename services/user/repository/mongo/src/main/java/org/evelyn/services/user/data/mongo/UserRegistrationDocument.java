@@ -14,4 +14,5 @@ public class UserRegistrationDocument {
     public String confirmKey;
     public String email;
     public String userHandle;
+    public String password;
 }

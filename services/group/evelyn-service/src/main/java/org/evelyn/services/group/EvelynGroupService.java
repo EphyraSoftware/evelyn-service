@@ -35,7 +35,7 @@ public class EvelynGroupService implements GroupService {
 
         groupMessage.getUsers().forEach(userMessage -> {
             UserMessage user = userService.getUser(userMessage.getId());
-            userMessage.setEmail(user.getEmail());
+            userMessage.setEmail(user.email);
         });
 
         return groupMessage;
@@ -54,8 +54,8 @@ public class EvelynGroupService implements GroupService {
                 UserMessage user = userService.getUser(userId);
 
                 GroupUserMessage groupUserMessage = new GroupUserMessage();
-                groupUserMessage.setId(user.getId());
-                groupUserMessage.setEmail(user.getEmail());
+                groupUserMessage.setId(user.id);
+                groupUserMessage.setEmail(user.email);
                 groupMessage.getUsers().add(groupUserMessage);
             }
             groupMessage.setName(group.getName());

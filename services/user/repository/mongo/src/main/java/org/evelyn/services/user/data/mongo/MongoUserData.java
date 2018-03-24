@@ -25,6 +25,7 @@ public class MongoUserData implements UserDataService {
         document.email = userRegistration.getEmail();
         document.confirmKey = userRegistration.getConfirmKey();
         document.userHandle = userRegistration.getUserHandle();
+        document.password = userRegistration.getPassword();
 
         registrationRepository.insert(document);
     }
@@ -40,6 +41,7 @@ public class MongoUserData implements UserDataService {
         userRegistration.setEmail(userRegistrationDocument.email);
         userRegistration.setExpiry(userRegistrationDocument.expiry);
         userRegistration.setUserHandle(userRegistrationDocument.userHandle);
+        userRegistration.setPassword(userRegistrationDocument.password);
         return userRegistration;
     }
 

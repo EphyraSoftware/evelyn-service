@@ -10,4 +10,5 @@ public class User {
     private String email;
     private Date dateCreated;
     private String handle;
+    private String password;
 }

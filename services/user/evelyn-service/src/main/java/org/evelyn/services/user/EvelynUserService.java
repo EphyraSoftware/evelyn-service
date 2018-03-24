@@ -27,23 +27,27 @@ public class EvelynUserService implements UserService {
     @Override
     public void registerUser(UserMessage userMessage) {
         UserRegistration userRegistration = new UserRegistration();
-        userRegistration.setExpiry(new Timestamp(new Date().getTime()).getTime() + 24 * 60 * 60);
-        userRegistration.setEmail(userMessage.getEmail());
-        userRegistration.setUserHandle(userMessage.getHandle());
+        // Provided fields.
+        // TODO check incoming
+        userRegistration.setEmail(userMessage.email);
+        userRegistration.setUserHandle(userMessage.handle);
+        userRegistration.setPassword(userMessage.password);
+        // Generated fields.
+        userRegistration.setExpiry(new Timestamp(new Date().getTime()).getTime() + 1000 * 24 * 60 * 60);
         userRegistration.setConfirmKey(
             new String(Base64.getEncoder().encode(UUID.randomUUID().toString().getBytes()))
         );
         userDataService.saveUserRegistration(userRegistration);
 
         UserCreatedMessage userCreatedMessage = new UserCreatedMessage();
-        userCreatedMessage.email = userMessage.getEmail();
+        userCreatedMessage.email = userMessage.email;
         userCreatedMessage.confirmKey = userRegistration.getConfirmKey();
         userMessaging.sendUserCreated(userCreatedMessage);
     }
 
     @Override
     public UserMessage confirmRegistration(ConfirmRegistrationMessage confirmRegistrationMessage) {
-        UserRegistration userRegistration = userDataService.lookupRegistration(confirmRegistrationMessage.getConfirmKey());
+        UserRegistration userRegistration = userDataService.lookupRegistration(confirmRegistrationMessage.confirmKey);
         if (userRegistration == null) {
             // No match found in the database for this confirm key.
             // May already have been confirmed or may be somebody trying to guess a confirm key (probably won't help you!).
@@ -57,16 +61,23 @@ public class EvelynUserService implements UserService {
             return null;
         }
 
+        if (!confirmRegistrationMessage.email.equals(userRegistration.getEmail()) || !confirmRegistrationMessage.password.equals(userRegistration.getPassword())) {
+            // Require a valid sign in with the confirm.
+            // TODO possibly should remove registration record from the database if the login is incorrect? Would be annoying for the user but...
+            return null;
+        }
+
         User user = new User();
-        user.setEmail(userRegistration.getEmail());
         user.setId(UUID.randomUUID().toString());
-        user.setDateCreated(new Date());
+        user.setEmail(userRegistration.getEmail());
+        user.setPassword(userRegistration.getPassword());
         user.setHandle(userRegistration.getUserHandle());
+        user.setDateCreated(new Date());
         userDataService.saveUser(user);
 
         UserMessage userMessage = new UserMessage();
-        userMessage.setEmail(user.getEmail());
-        userMessage.setHandle(user.getHandle());
+        userMessage.email = user.getEmail();
+        userMessage.handle = user.getHandle();
         return userMessage;
     }
 
@@ -75,8 +86,9 @@ public class EvelynUserService implements UserService {
         User user = userDataService.getUser(userId);
 
         UserMessage userMessage = new UserMessage();
-        userMessage.setEmail(user.getEmail());
-        userMessage.setId(user.getId());
+        userMessage.email = user.getEmail();
+        userMessage.id = user.getId();
+
         return userMessage;
     }
 }

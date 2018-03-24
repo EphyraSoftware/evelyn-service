@@ -10,4 +10,5 @@ public class UserRegistration {
     private String confirmKey;
     private String email;
     private String userHandle;
+    private String password;
 }

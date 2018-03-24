@@ -18,11 +18,9 @@ public class UserController {
         userService.registerUser(userMessage);
     }
 
-    @RequestMapping(value = "/users/confirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/confirm", method = RequestMethod.POST)
     @ResponseBody
-    public UserMessage confirm(@RequestParam("token") String token) {
-        ConfirmRegistrationMessage confirmRegistrationMessage = new ConfirmRegistrationMessage();
-        confirmRegistrationMessage.setConfirmKey(token);
+    public UserMessage confirm(@RequestBody ConfirmRegistrationMessage confirmRegistrationMessage) {
         return userService.confirmRegistration(confirmRegistrationMessage);
     }
 }
