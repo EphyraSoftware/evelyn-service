@@ -6,6 +6,6 @@
     <body>
         <p>Hello templates</p>
 
-        <a href="http://localhost:8080/users/confirm?token=${confirmKey}">Confirm your sign up here</a>
+        <a href="http://localhost:4200/logon/confirm?token=${confirmKey}">Confirm your sign up here</a>
     </body>
 </html>
