@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 @EnableMongoRepositories(basePackages = "org.evelyn.services.user.data.mongo")
 public class MongoUserData implements UserDataService {
