@@ -49,8 +49,23 @@ public class MongoUserData implements UserDataService {
         userDocument.dateCreated = user.getDateCreated();
         userDocument.email = user.getEmail();
         userDocument.handle = user.getHandle();
+        userDocument.password = user.getPassword();
 
         userRepository.insert(userDocument);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        UserDocument userDocument = userRepository.findByEmail(email);
+        if (userDocument == null) {
+            return null;
+        }
+
+        User user = new User();
+        user.setHandle(userDocument.handle);
+        user.setEmail(userDocument.email);
+        user.setPassword(userDocument.password);
+        return user;
     }
 
     @Override

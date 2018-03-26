@@ -7,6 +7,6 @@ public interface UserDataService {
     void saveUserRegistration(UserRegistration userRegistration);
     UserRegistration lookupRegistration(String confirmKey);
     void saveUser(User user);
+    User getUserByEmail(String email);
     User getUser(String userId);
-
 }

@@ -2,6 +2,7 @@ package org.evelyn.services.user;
 
 import org.evelyn.services.user.api.UserService;
 import org.evelyn.services.user.api.message.ConfirmRegistrationMessage;
+import org.evelyn.services.user.api.message.SignInMessage;
 import org.evelyn.services.user.api.message.UserMessage;
 import org.evelyn.services.user.data.api.UserDataService;
 import org.evelyn.services.user.data.api.model.User;
@@ -78,6 +79,25 @@ public class EvelynUserService implements UserService {
         UserMessage userMessage = new UserMessage();
         userMessage.email = user.getEmail();
         userMessage.handle = user.getHandle();
+        return userMessage;
+    }
+
+    @Override
+    public UserMessage signIn(SignInMessage signInMessage) {
+        User user = userDataService.getUserByEmail(signInMessage.email);
+        if (user == null) {
+            return null;
+        }
+
+        if (!user.getPassword().equals(signInMessage.password)) {
+            return null;
+        }
+
+        // TODO token.
+
+        UserMessage userMessage = new UserMessage();
+        userMessage.handle = user.getHandle();
+        userMessage.email = user.getEmail();
         return userMessage;
     }
 

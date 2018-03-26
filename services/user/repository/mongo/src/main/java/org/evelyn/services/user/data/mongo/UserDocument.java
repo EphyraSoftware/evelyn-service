@@ -14,6 +14,7 @@ public class UserDocument {
     public String handle;
     public String email;
     public Date dateCreated;
+    public String password;
 
     @Override
     public String toString() {
