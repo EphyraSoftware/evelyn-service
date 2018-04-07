@@ -1,0 +1,20 @@
+plugins {
+    id 'org.springframework.boot' version '2.0.1.RELEASE'
+    id 'java'
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${rootProject.springBootVersion}"
+
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-client
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: "${rootProject.springFrameworkVersion}"
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-jose
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: "${rootProject.springFrameworkVersion}"
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${rootProject.springBootVersion}"
+}

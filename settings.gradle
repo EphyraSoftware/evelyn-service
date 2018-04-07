@@ -7,6 +7,7 @@ include 'services:user:api', 'services:user:evelyn-service', 'services:user:repo
         'services:user:messaging:api', 'services:user:messaging:rabbit'
 include 'services:group:api', 'services:group:evelyn-service', 'services:group:repository:api',
         'services:group:rest-api', 'services:group:web-app', 'services:group:repository:mongo'
+include 'services:auth:web-app'
 
 // Monolith server
 include 'server:evelyn-monolith'
