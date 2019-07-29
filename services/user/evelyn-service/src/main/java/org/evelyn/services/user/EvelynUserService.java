@@ -9,7 +9,6 @@ import org.evelyn.services.user.data.api.model.User;
 import org.evelyn.services.user.data.api.model.UserRegistration;
 import org.evelyn.services.user.messaging.api.UserMessaging;
 import org.evelyn.services.user.messaging.api.model.UserCreatedMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -19,13 +18,16 @@ import java.util.UUID;
 
 @Service
 public class EvelynUserService implements UserService {
-    @Autowired
     private UserDataService userDataService;
 
-    @Autowired
-    private UserMessaging userMessaging;
+    private final UserMessaging userMessaging;
 
-    @Override
+	public EvelynUserService(UserMessaging userMessaging, UserDataService userDataService) {
+		this.userMessaging = userMessaging;
+      this.userDataService = userDataService;
+	}
+
+	@Override
     public void registerUser(UserMessage userMessage) {
         UserRegistration userRegistration = new UserRegistration();
         // Provided fields.

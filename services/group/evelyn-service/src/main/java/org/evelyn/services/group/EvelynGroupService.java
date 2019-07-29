@@ -7,7 +7,7 @@ import org.evelyn.services.group.data.api.GroupDataService;
 import org.evelyn.services.group.data.api.model.Group;
 import org.evelyn.services.user.api.UserService;
 import org.evelyn.services.user.api.message.UserMessage;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,11 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class EvelynGroupService implements GroupService {
-    @Autowired
-    private GroupDataService groupDataService;
+    private final GroupDataService groupDataService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public EvelynGroupService(GroupDataService groupDataService, @Qualifier("evelynUserService") UserService userService) {
+        this.groupDataService = groupDataService;
+        this.userService = userService;
+    }
 
     @Override
     public GroupMessage createGroup(GroupMessage groupMessage) {

@@ -3,18 +3,20 @@ package org.evelyn.services.user.data.mongo;
 import org.evelyn.services.user.data.api.UserDataService;
 import org.evelyn.services.user.data.api.model.User;
 import org.evelyn.services.user.data.api.model.UserRegistration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 
 @Service
 @EnableMongoRepositories(basePackages = "org.evelyn.services.user.data.mongo")
 public class MongoUserData implements UserDataService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRegistrationRepository registrationRepository;
+    private final UserRegistrationRepository registrationRepository;
+
+    public MongoUserData(UserRepository userRepository, UserRegistrationRepository registrationRepository) {
+        this.userRepository = userRepository;
+        this.registrationRepository = registrationRepository;
+    }
 
     @Override
     public void saveUserRegistration(UserRegistration userRegistration) {
