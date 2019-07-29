@@ -4,7 +4,6 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.evelyn.services.email.api.EmailService;
 import org.evelyn.services.user.messaging.api.model.UserCreatedMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -17,11 +16,14 @@ import java.util.Map;
 
 @Component
 class EvelynEmailService implements EmailService {
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    @Autowired
-    private Configuration freeMarkerConfiguration;
+    private final Configuration freeMarkerConfiguration;
+
+    public EvelynEmailService(JavaMailSender mailSender, Configuration freeMarkerConfiguration) {
+        this.mailSender = mailSender;
+        this.freeMarkerConfiguration = freeMarkerConfiguration;
+    }
 
     @Override
     public void onUserCreated(UserCreatedMessage userMessage) {

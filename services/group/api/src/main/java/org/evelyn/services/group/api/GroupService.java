@@ -1,8 +1,8 @@
 package org.evelyn.services.group.api;
 
-import java.util.List;
-
 import org.evelyn.services.group.api.message.GroupMessage;
+
+import java.util.List;
 
 public interface GroupService {
     GroupMessage createGroup(GroupMessage groupMessage);

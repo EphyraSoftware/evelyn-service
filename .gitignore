@@ -1,6 +1,9 @@
 # Gradle ignores
 .gradle
+gradle/
 .settings
+gradlew
+gradlew.bat
 
 # IntelliJ ignores
 .idea
