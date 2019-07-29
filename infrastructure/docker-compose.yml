@@ -1,14 +1,14 @@
 version: '3'
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:4.1
     ports:
       - 9081:27017
     # Doesn't work on Windows
     #volumes:
     #  - ./data/db:/data/db
   rabbitmq:
-    image: rabbitmq:3.7-rc-management
+    image: rabbitmq:3.7-management
     ports:
       - 9082:5672
       - 6001:15672 # Management console
@@ -19,7 +19,7 @@ services:
     # server 'localhost'
     # (incoming) pop3 port '3110'
     # (outgoing) smtp port '3025'
-    image: greenmail/standalone:1.5.7
+    image: greenmail/standalone:1.5.10
     environment:
       - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.verbose -Dgreenmail.users=evelyn-mailer:secret
       - JAVA_OPTS=-Djava.net.preferIPv4Stack=true -Xmx512m
@@ -31,7 +31,7 @@ services:
       - 3993:3993
       - 3995:3995
   keycloak:
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:6.0.1
     depends_on:
       - postgres
     ports:
@@ -43,8 +43,9 @@ services:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
   # Why doesn't keycloak 4 like mysql?
+  # Now upgraded to keycloak 6, can recheck
   postgres:
-    image: postgres
+    image: postgres:9.6
     environment:
       POSTGRES_DATABASE: keycloak
       POSTGRES_USER: keycloak
