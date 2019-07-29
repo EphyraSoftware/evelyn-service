@@ -3,8 +3,6 @@ package org.evelyn.services.user.data.mongo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
 @Document
 public class UserRegistrationDocument {
     @Id
