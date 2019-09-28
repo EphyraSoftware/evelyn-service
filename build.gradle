@@ -1,6 +1,6 @@
 ext {
     springFrameworkVersion = '5.0.4.RELEASE'
-    springBootVersion = '2.0.1.RELEASE'
+    springBootVersion = '2.1.8.RELEASE'
     springDataVersion = '2.0.6.RELEASE'
     lombokVersion = '1.18.8'
 
