@@ -73,8 +73,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     return registrationBean;
   }
 
-
-
   @Bean
   @Override
   @ConditionalOnMissingBean(HttpSessionManager.class)
@@ -88,6 +86,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     http
             .authorizeRequests()
             .antMatchers(HttpMethod.OPTIONS,"/test").permitAll()
-            .antMatchers("/test").hasRole("singer").anyRequest().permitAll();
+            .anyRequest().authenticated();
+//            .antMatchers("/test").hasRole("singer").anyRequest().permitAll();
   }
 }
