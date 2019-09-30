@@ -1,0 +1,15 @@
+server:
+  port: 8086
+
+keycloak:
+  auth-server-url: http://localhost:9083/auth
+  realm: evelyn-services-realm
+  public-client: true
+  resource: evelyn-ui
+  principal-attribute: preferred_username
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
