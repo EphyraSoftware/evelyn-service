@@ -20,4 +20,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${rootProject.springBootVersion}"
+
+    runtimeOnly project(':libraries:authentication')
 }

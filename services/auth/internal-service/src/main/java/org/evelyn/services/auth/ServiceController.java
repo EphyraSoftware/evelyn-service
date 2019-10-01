@@ -1,10 +1,8 @@
-package org.evelyn.library.authentication;
+package org.evelyn.services.auth;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +13,9 @@ import java.security.Principal;
 
 @RestController
 @SpringBootApplication
-@ComponentScan("org.evelyn.services.auth")
+@ComponentScan(value = {"org.evelyn.library.authentication"})
 @CrossOrigin("*")
 public class ServiceController {
-  @Bean
-  public KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
-    return new KeycloakSpringBootConfigResolver();
-  }
-
   public static void main(String[] args) {
     SpringApplication.run(ServiceController.class, args);
   }
