@@ -1,4 +1,4 @@
-package org.evelyn.services.auth.web;
+package org.evelyn.library.authentication;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

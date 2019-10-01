@@ -1,4 +1,4 @@
-package org.evelyn.services.auth.web.config;
+package org.evelyn.library.authentication.config;
 
 import org.springframework.context.annotation.Import;
 

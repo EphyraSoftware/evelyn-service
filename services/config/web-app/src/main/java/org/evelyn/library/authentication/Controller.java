@@ -1,8 +1,8 @@
-package org.evelyn.services.auth.web;
+package org.evelyn.library.authentication;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.evelyn.services.auth.web.config.EnableEtcdConfigServer;
-import org.evelyn.services.auth.web.config.IRemoteConfigRefresher;
+import org.evelyn.library.authentication.config.EnableEtcdConfigServer;
+import org.evelyn.library.authentication.config.IRemoteConfigRefresher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

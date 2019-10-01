@@ -1,4 +1,4 @@
-package org.evelyn.services.auth.web.config;
+package org.evelyn.library.authentication.config;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
