@@ -1,4 +1,4 @@
-package org.evelyn.services.auth.web;
+package org.evelyn.library.authentication;
 
 //import static org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
 

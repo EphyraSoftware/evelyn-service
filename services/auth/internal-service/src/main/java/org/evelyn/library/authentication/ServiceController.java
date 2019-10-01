@@ -1,4 +1,4 @@
-package org.evelyn.services.auth.web;
+package org.evelyn.library.authentication;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;

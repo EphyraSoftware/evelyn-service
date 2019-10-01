@@ -49,6 +49,8 @@ project(':services:user:web-app') {
     dependencies {
         compile project(':services:user:api')
         runtime project(':services:user:rest-api')
+
+        compile project(':libraries:authentication')
     }
 }
 
