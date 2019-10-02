@@ -1,6 +1,6 @@
 plugins {
     // TODO Can only use literals in this block... Want to set version with variable.
-    id 'org.springframework.boot' version '2.0.0.RELEASE'
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'java'
 }
 
