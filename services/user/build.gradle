@@ -51,6 +51,7 @@ project(':services:user:web-app') {
         runtime project(':services:user:rest-api')
 
         compile project(':libraries:authentication')
+        compile project(':libraries:remote-configuration')
     }
 }
 

@@ -1,6 +1,7 @@
 rootProject.name = 'evelyn-service'
 
-include 'libraries:authentication'
+include 'libraries:authentication',
+        'libraries:remote-configuration'
 
 include 'services:email:api', 'services:email:evelyn-service', 'services:email:messaging:api',
         'services:email:messaging:rabbit', 'services:email:web-app'
@@ -9,7 +10,6 @@ include 'services:user:api', 'services:user:evelyn-service', 'services:user:repo
         'services:user:messaging:api', 'services:user:messaging:rabbit'
 include 'services:group:api', 'services:group:evelyn-service', 'services:group:repository:api',
         'services:group:rest-api', 'services:group:web-app', 'services:group:repository:mongo'
-include 'services:auth:web-app', 'services:auth:internal-service', 'services:config:web-app'
 
 // Monolith server
 include 'server:evelyn-monolith'

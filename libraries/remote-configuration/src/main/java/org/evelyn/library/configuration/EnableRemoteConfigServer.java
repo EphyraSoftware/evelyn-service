@@ -1,4 +1,4 @@
-package org.evelyn.library.authentication.config;
+package org.evelyn.library.configuration;
 
 import org.springframework.context.annotation.Import;
 
@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Import(EtcdConfiguration.class)
-public @interface EnableEtcdConfigServer {
+public @interface EnableRemoteConfigServer {
 }

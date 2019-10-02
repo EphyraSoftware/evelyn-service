@@ -1,4 +1,4 @@
-package org.evelyn.library.authentication.config;
+package org.evelyn.library.configuration;
 
 import java.lang.reflect.Method;
 
@@ -6,19 +6,19 @@ class SettableProperty {
   private Method propertySetter;
   private Object target;
 
-  public Method getPropertySetter() {
+  Method getPropertySetter() {
     return propertySetter;
   }
 
-  public void setPropertySetter(Method propertySetter) {
+  void setPropertySetter(Method propertySetter) {
     this.propertySetter = propertySetter;
   }
 
-  public Object getTarget() {
+  Object getTarget() {
     return target;
   }
 
-  public void setTarget(Object target) {
+  void setTarget(Object target) {
     this.target = target;
   }
 }

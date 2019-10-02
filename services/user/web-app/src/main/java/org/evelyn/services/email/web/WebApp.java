@@ -1,5 +1,6 @@
 package org.evelyn.services.email.web;
 
+import org.evelyn.library.configuration.EnableRemoteConfigServer;
 import org.evelyn.services.user.api.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,7 @@ import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 
 @SpringBootApplication
 @ComponentScan("org.evelyn.services.user")
+@EnableRemoteConfigServer
 public class WebApp {
     @Bean(name = "/userServiceExporter")
     public HttpInvokerServiceExporter userServiceExporter(UserService userService) {

@@ -1,17 +1,17 @@
-package org.evelyn.library.authentication.config;
+package org.evelyn.library.configuration;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Set;
 
-public class EtcdPropertySetter {
+class EtcdPropertySetter {
   private Map<String, SettableProperty> properties;
 
-  public EtcdPropertySetter(Map<String, SettableProperty> properties) {
+  EtcdPropertySetter(Map<String, SettableProperty> properties) {
     this.properties = properties;
   }
 
-  public boolean setProperty(String name, Object value) {
+  boolean setProperty(String name, Object value) {
     SettableProperty settableProperty = this.properties.get(name);
     if (settableProperty == null) {
       return false;
@@ -26,7 +26,7 @@ public class EtcdPropertySetter {
     return true;
   }
 
-  public Set<String> getPropertyNames() {
+  Set<String> getPropertyNames() {
     return properties.keySet();
   }
 }

@@ -1,4 +1,4 @@
-package org.evelyn.library.authentication.config;
+package org.evelyn.library.configuration;
 
 public interface IRemoteConfigRefresher {
   void refresh();

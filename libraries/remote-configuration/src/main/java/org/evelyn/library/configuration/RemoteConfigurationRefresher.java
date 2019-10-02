@@ -1,4 +1,4 @@
-package org.evelyn.library.authentication.config;
+package org.evelyn.library.configuration;
 
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.Client;
@@ -11,13 +11,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Component
-public class EtcdRemoteConfigRefresher implements IRemoteConfigRefresher {
+public class RemoteConfigurationRefresher implements IRemoteConfigRefresher {
   @Value("${org.evelyn.etcd-url}")
   private String etcdUrl;
 
   private final EtcdPropertySetter propertySetter;
 
-  public EtcdRemoteConfigRefresher(EtcdPropertySetter propertySetter) {
+  public RemoteConfigurationRefresher(EtcdPropertySetter propertySetter) {
     this.propertySetter = propertySetter;
   }
 

@@ -1,4 +1,4 @@
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
-    compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: '2.0.2.RELEASE'
+    compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: '2.1.11.RELEASE'
 }

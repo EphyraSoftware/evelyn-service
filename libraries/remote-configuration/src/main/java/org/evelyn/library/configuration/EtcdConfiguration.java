@@ -1,4 +1,4 @@
-package org.evelyn.library.authentication.config;
+package org.evelyn.library.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -18,9 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 @Configuration
-@ComponentScan("org.evelyn.services.auth.web.config.controller")
-public class EtcdConfiguration {
-  private static final Set<Class> primitiveTypes = new HashSet<Class>(Arrays.asList(
+@ComponentScan("org.evelyn.library.configuration")
+class EtcdConfiguration {
+  private static final Set<Class> primitiveTypes = new HashSet<>(Arrays.asList(
           Boolean.class,
           Character.class,
           Byte.class,
