@@ -14,7 +14,7 @@ dependencies {
 
     compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
 
-    runtime project(':services:user:rest-api')
+    runtime project(':services:profile:rest-api')
     runtime project(':services:group:rest-api')
 
     runtime project(':services:email:evelyn-service')
