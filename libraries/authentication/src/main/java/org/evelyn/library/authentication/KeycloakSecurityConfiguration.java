@@ -22,6 +22,8 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
+// The filter registration beans code has warnings but is taken straight from the Keycloak documentation.
+@SuppressWarnings("unchecked")
 @KeycloakConfiguration
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 public class KeycloakSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter {
@@ -44,7 +46,7 @@ public class KeycloakSecurityConfiguration extends KeycloakWebSecurityConfigurer
   @Bean
   public FilterRegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(
           KeycloakAuthenticationProcessingFilter filter) {
-    FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
+    var registrationBean = new FilterRegistrationBean(filter);
     registrationBean.setEnabled(false);
     return registrationBean;
   }

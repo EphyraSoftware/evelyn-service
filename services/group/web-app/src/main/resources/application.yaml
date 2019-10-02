@@ -4,3 +4,8 @@ server:
 services:
   user:
     url: http://localhost:8081/userServiceExporter
+
+org:
+  evelyn:
+    group:
+      mongo-connection-string: mongodb://localhost:9081
