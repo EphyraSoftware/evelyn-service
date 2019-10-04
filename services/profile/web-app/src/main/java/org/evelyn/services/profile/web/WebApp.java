@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("org.evelyn.services.profile")
+@ComponentScan(basePackages = {"org.evelyn.services.profile", "org.evelyn.library.authentication"})
 @EnableRemoteConfigServer
 public class WebApp {
     public static void main(String[] args) {

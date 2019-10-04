@@ -86,8 +86,9 @@ public class KeycloakSecurityConfiguration extends KeycloakWebSecurityConfigurer
   protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
     http
+            .csrf().disable() // TODO temp!
             .authorizeRequests()
-            .antMatchers(HttpMethod.OPTIONS,"/test").permitAll()
+            .antMatchers(HttpMethod.OPTIONS,"**").permitAll()
             .anyRequest().authenticated();
   }
 }
