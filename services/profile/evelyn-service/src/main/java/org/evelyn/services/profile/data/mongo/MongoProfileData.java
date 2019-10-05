@@ -28,6 +28,7 @@ public class MongoProfileData implements ProfileDataService {
         // Map profile fields here.
         profile.setProfileId(profileDocument.id);
         profile.setNickname(profileDocument.nickname);
+        profile.setEmail(principalName);
 
         return profile;
     }

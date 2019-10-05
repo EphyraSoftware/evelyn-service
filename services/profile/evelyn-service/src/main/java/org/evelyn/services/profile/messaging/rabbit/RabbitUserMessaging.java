@@ -1,20 +1,24 @@
 package org.evelyn.services.profile.messaging.rabbit;
 
+import org.evelyn.services.profile.messaging.api.EmailModel;
 import org.evelyn.services.profile.messaging.api.UserMessaging;
-import org.evelyn.services.profile.messaging.api.model.UserCreatedMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RabbitUserMessaging implements UserMessaging {
-    private final RabbitTemplate rabbitTemplate;
+  @Value("${org.evelyn.profile.email-input-queue-name}")
+  private String queueName;
 
-	public RabbitUserMessaging(RabbitTemplate rabbitTemplate) {
-		this.rabbitTemplate = rabbitTemplate;
-	}
+  private final RabbitTemplate rabbitTemplate;
 
-	@Override
-    public void sendUserCreated(UserCreatedMessage userCreatedMessage) {
-        rabbitTemplate.convertAndSend(UserMessaging.USER_CREATED_QUEUE_NAME, userCreatedMessage);
-    }
+  public RabbitUserMessaging(RabbitTemplate rabbitTemplate) {
+    this.rabbitTemplate = rabbitTemplate;
+  }
+
+  @Override
+  public void sendUserRegistered(EmailModel userRegisteredMessage) {
+    rabbitTemplate.convertAndSend(queueName, userRegisteredMessage);
+  }
 }

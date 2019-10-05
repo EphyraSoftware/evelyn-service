@@ -5,6 +5,7 @@ public class Profile {
   private boolean newRegistration = false;
 
   private String nickname;
+  private String email;
 
   public void setNewRegistration(boolean newRegistration) {
     this.newRegistration = newRegistration;
@@ -28,5 +29,13 @@ public class Profile {
 
   public void setProfileId(String profileId) {
     this.profileId = profileId;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getEmail() {
+    return email;
   }
 }

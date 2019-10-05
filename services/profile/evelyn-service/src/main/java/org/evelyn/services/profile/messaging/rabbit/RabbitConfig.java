@@ -4,16 +4,18 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static org.evelyn.services.profile.messaging.api.UserMessaging.USER_CREATED_QUEUE_NAME;
-
 @Configuration
 public class RabbitConfig {
-    @Bean(name = "userCreatedQueue")
+    @Value("${org.evelyn.profile.email-input-queue-name}")
+    private String queueName;
+
+    @Bean
     Queue queue() {
-        return new Queue(USER_CREATED_QUEUE_NAME, false);
+        return new Queue(queueName, true);
     }
 
     @Bean
@@ -23,6 +25,6 @@ public class RabbitConfig {
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(USER_CREATED_QUEUE_NAME);
+        return BindingBuilder.bind(queue).to(exchange).with(queueName);
     }
 }

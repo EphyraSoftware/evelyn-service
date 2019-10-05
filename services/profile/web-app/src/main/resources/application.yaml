@@ -9,6 +9,7 @@ org:
     etcd-url: http://localhost:2379
     profile:
       mongo-connection-string: mongodb://localhost:9081
+      email-input-queue-name: send-mail
 
 keycloak:
   auth-server-url: http://localhost:9083/auth
