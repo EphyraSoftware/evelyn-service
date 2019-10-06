@@ -19,6 +19,10 @@ project(':services:email:evelyn-service') {
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
         compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
         annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+
+        // TODO Use me for writing some tests!
+        // https://mvnrepository.com/artifact/com.icegreen/greenmail
+        //testCompile group: 'com.icegreen', name: 'greenmail', version: '1.5.10'
     }
 }
 
