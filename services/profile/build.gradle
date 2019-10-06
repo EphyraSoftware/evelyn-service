@@ -13,6 +13,8 @@ subprojects {
 
 project(":services:profile:evelyn-service") {
     dependencies {
+        compile project(':libraries:message-models')
+
         // https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb
         compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${rootProject.springMongoVersion}"
 

@@ -1,7 +1,0 @@
-dependencies {
-    // https://mvnrepository.com/artifact/org.springframework/spring-context
-    compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
-
-    // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
-    compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${rootProject.springRabbitVersion}"
-}

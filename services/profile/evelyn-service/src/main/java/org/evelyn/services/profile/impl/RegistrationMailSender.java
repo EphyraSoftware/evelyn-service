@@ -3,8 +3,8 @@ package org.evelyn.services.profile.impl;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.evelyn.library.messages.EmailMessage;
 import org.evelyn.services.profile.api.Profile;
-import org.evelyn.services.profile.messaging.api.EmailModel;
 import org.evelyn.services.profile.messaging.api.UserMessaging;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -28,7 +28,7 @@ public class RegistrationMailSender {
     Template template = freeMarkerConfiguration.getTemplate("registration.ftl");
     String processedTemplate = FreeMarkerTemplateUtils.processTemplateIntoString(template, new HashMap<>());
 
-    EmailModel emailModel = new EmailModel();
+    EmailMessage emailModel = new EmailMessage();
     emailModel.setSubject("Welcome from Evelyn");
     emailModel.setBody(processedTemplate);
     emailModel.setRecipients(Collections.singletonList(profile.getEmail()));

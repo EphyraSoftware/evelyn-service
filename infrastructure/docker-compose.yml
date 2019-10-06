@@ -21,7 +21,7 @@ services:
     # (outgoing) smtp port '3025'
     image: greenmail/standalone:1.5.10
     environment:
-      - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.verbose -Dgreenmail.users=evelyn-mailer:secret
+      - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.verbose -Dgreenmail.users=evelynmailer:passwd@localhost
       - JAVA_OPTS=-Djava.net.preferIPv4Stack=true -Xmx512m
     ports:
       - 3025:3025

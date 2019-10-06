@@ -1,6 +1,6 @@
 package org.evelyn.services.profile.messaging.rabbit;
 
-import org.evelyn.services.profile.messaging.api.EmailModel;
+import org.evelyn.library.messages.EmailMessage;
 import org.evelyn.services.profile.messaging.api.UserMessaging;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ public class RabbitUserMessaging implements UserMessaging {
   }
 
   @Override
-  public void sendUserRegistered(EmailModel userRegisteredMessage) {
+  public void sendUserRegistered(EmailMessage userRegisteredMessage) {
     rabbitTemplate.convertAndSend(queueName, userRegisteredMessage);
   }
 }

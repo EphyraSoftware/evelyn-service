@@ -1,4 +1,4 @@
-package org.evelyn.services.email;
+package org.evelyn.services.email.impl;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,8 @@ public class MailConfiguration {
         mailSender.setHost("localhost");
         mailSender.setPort(3025);
 
-        mailSender.setUsername("evelyn-mailer@localhost");
-        mailSender.setPassword("password");
+        mailSender.setUsername("evelynmailer");
+        mailSender.setPassword("passwd");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

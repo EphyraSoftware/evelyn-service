@@ -25,6 +25,6 @@ public class RabbitConfig {
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(queueName);
+        return BindingBuilder.bind(queue).to(exchange).with("none");
     }
 }

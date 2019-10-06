@@ -1,6 +1,7 @@
 rootProject.name = 'evelyn-service'
 
 include 'libraries:authentication',
+        'libraries:message-models',
         'libraries:remote-configuration'
 
 include 'services:email:api', 'services:email:evelyn-service', 'services:email:messaging:api',

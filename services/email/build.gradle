@@ -6,29 +6,24 @@ subprojects {
     }
 }
 
-project(':services:email:api') {
-    dependencies {
-        compile project(':services:user:messaging:api')
-    }
-}
-
 project(':services:email:evelyn-service') {
     dependencies {
-        compile project(':services:email:api')
-        compile project(':services:user:messaging:api')
-    }
-}
+        compile project(':libraries:message-models')
 
-project(':services:email:messaging:rabbit') {
-    dependencies {
-        compile project(':services:email:api')
-        compile project(':services:email:messaging:api')
+        // https://mvnrepository.com/artifact/org.springframework/spring-context
+        compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
+
+        // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
+        compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${rootProject.springRabbitVersion}"
+
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
     }
 }
 
 project(':services:email:web-app') {
     dependencies {
         runtime project(':services:email:evelyn-service')
-        runtime project(':services:email:messaging:rabbit')
     }
 }
