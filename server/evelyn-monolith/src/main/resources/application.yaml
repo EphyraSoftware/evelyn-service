@@ -1,3 +1,11 @@
 spring:
   rabbitmq:
     port: 9082
+
+org:
+  evelyn:
+    profile:
+      mongo-connection-string: mongodb://localhost:9081
+      email-input-queue-name: send-mail
+    email:
+      email-input-queue-name: send-mail

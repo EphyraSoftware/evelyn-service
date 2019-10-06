@@ -18,5 +18,4 @@ dependencies {
     runtime project(':services:group:rest-api')
 
     runtime project(':services:email:evelyn-service')
-    runtime project(':services:email:messaging:rabbit')
 }
