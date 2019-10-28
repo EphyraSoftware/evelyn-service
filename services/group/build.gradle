@@ -17,34 +17,35 @@ subprojects {
 
 project(':services:group:evelyn-service') {
     dependencies {
-        compile project(':services:group:api')
-        compile project(':services:group:repository:api')
+        compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${rootProject.springMongoVersion}"
 
-        compile project(':services:user:api')
-    }
-}
+        // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
+        compile group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${rootProject.keycloakSpringVersion}"
 
-project(":services:group:repository:mongo") {
-    dependencies {
-        compile project(':services:group:repository:api')
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
     }
 }
 
 project(':services:group:rest-api') {
     dependencies {
-        compile project(':services:group:api')
+        compile project(':services:group:evelyn-service')
 
-        runtime project(':services:group:evelyn-service')
-        runtime project(":services:group:repository:mongo")
+        // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
+        compile group: 'org.springframework', name: 'spring-webmvc', version: "${rootProject.springFrameworkVersion}"
     }
 }
 
 project(':services:group:web-app') {
     dependencies {
-        compile project(':services:group:api')
-        runtime project(':services:group:evelyn-service')
-        runtime project(':services:group:rest-api')
+        compile project(':services:group:rest-api')
 
-        compile project(':services:user:api')
+        compile project(':libraries:authentication')
+
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${rootProject.springBootVersion}"
+
+        compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
     }
 }

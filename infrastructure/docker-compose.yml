@@ -24,12 +24,12 @@ services:
       - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.verbose -Dgreenmail.users=evelynmailer:passwd@localhost
       - JAVA_OPTS=-Djava.net.preferIPv4Stack=true -Xmx512m
     ports:
-      - 3025:3025
-      - 3110:3110
-      - 3143:3143
-      - 3465:3465
-      - 3993:3993
-      - 3995:3995
+      - 3025:3025 # SMTP
+      - 3110:3110 # POP3
+      - 3143:3143 # IMAP
+      - 3465:3465 # SMTPS
+      - 3993:3993 # IMAPS
+      - 3995:3995 # POP3S
   keycloak:
     image: jboss/keycloak:6.0.1
     depends_on:

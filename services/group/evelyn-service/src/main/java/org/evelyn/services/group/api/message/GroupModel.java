@@ -3,10 +3,10 @@ package org.evelyn.services.group.api.message;
 import java.io.Serializable;
 import java.util.List;
 
-public class GroupMessage implements Serializable {
+public class GroupModel implements Serializable {
     private String groupId;
     private String name;
-    private List<GroupUserMessage> users;
+    private List<GroupMemberModel> users;
 
     public String getGroupId() {
         return groupId;
@@ -24,11 +24,11 @@ public class GroupMessage implements Serializable {
         this.name = name;
     }
 
-    public List<GroupUserMessage> getUsers() {
+    public List<GroupMemberModel> getProfiles() {
         return users;
     }
 
-    public void setUsers(List<GroupUserMessage> users) {
+    public void setUsers(List<GroupMemberModel> users) {
         this.users = users;
     }
 }

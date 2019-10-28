@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 @Configuration
 public class MongoGroupConfig extends AbstractMongoClientConfiguration {
-    @Value("${org.evelyn.group.mongo-connection-string")
+    @Value("${org.evelyn.group.mongo-connection-string}")
     private String connectionString;
 
     @Override

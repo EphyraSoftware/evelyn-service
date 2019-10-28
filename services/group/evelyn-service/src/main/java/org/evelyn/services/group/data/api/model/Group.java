@@ -8,5 +8,5 @@ import java.util.List;
 public class Group {
     private String groupId;
     private String name;
-    private List<String> userList;
+    private List<GroupMember> userList;
 }
