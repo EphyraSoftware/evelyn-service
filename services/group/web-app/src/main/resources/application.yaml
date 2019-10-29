@@ -1,6 +1,13 @@
 server:
   port: 8082
 
+keycloak:
+  auth-server-url: http://localhost:9083/auth
+  realm: evelyn-services-realm
+  public-client: true
+  resource: evelyn-ui
+  principal-attribute: preferred_username
+
 org:
   evelyn:
     group:

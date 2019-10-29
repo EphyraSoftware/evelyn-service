@@ -47,13 +47,15 @@ public class EvelynGroupService implements GroupService {
 
     groupDataService.createGroup(group);
 
-    groupModel.setUsers(Collections.singletonList(mapGroupMember(groupMember)));
+    groupModel.setGroupId(group.getGroupId());
+    groupModel.setUsers(Collections.singletonList(mapGroupMember(groupMember, currentProfile.getBody().getEmail())));
     return groupModel;
   }
 
-  private GroupMemberModel mapGroupMember(GroupMember groupMember) {
+  private GroupMemberModel mapGroupMember(GroupMember groupMember, String email) {
     var groupMemberModel = new GroupMemberModel();
     groupMemberModel.setId(groupMember.getProfileId());
+    groupMemberModel.setEmail(email);
     switch (groupMember.getGroupRole()) {
       case Owner:
         groupMemberModel.setGroupRoleModel(GroupRoleModel.Owner);
@@ -83,7 +85,15 @@ public class EvelynGroupService implements GroupService {
         GroupMemberModel groupMemberModel = new GroupMemberModel();
         groupMemberModel.setId(profileModel.getProfileId());
         groupMemberModel.setEmail(profileModel.getEmail());
-        groupModel.getProfiles().add(groupMemberModel);
+        switch (groupMember.getGroupRole()) {
+          case Owner:
+            groupMemberModel.setGroupRoleModel(GroupRoleModel.Owner);
+            break;
+          case Member:
+            groupMemberModel.setGroupRoleModel(GroupRoleModel.Member);
+            break;
+        }
+        groupModel.getUsers().add(groupMemberModel);
       }
       groupModel.setName(group.getName());
       groupModel.setGroupId(group.getGroupId());
