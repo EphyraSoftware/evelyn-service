@@ -2,51 +2,57 @@ subprojects {
     apply plugin: 'java'
 
     repositories {
+        mavenLocal()
         jcenter()
-    }
-
-    dependencies {
-        // https://mvnrepository.com/artifact/org.springframework/spring-context
-        compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
     }
 }
 
-project(":services:profile:evelyn-service") {
+project.version = '1.0.0'
+
+ext {
+    springFrameworkVersion = '5.1.9.RELEASE'
+    springBootVersion = '2.1.8.RELEASE'
+    springMongoVersion = '2.2.0.RELEASE'
+    springRabbitVersion = '2.1.11.RELEASE'
+    lombokVersion = '1.18.10'
+}
+
+project(":evelyn-service") {
     dependencies {
-        compile project(':libraries:message-models')
+        compile group: 'org.evelyn.library', name: 'message-models', version: '1.0.0-SNAPSHOT'
 
         // https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb
-        compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${rootProject.springMongoVersion}"
+        compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${springMongoVersion}"
 
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
-        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
-        compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${rootProject.springRabbitVersion}"
+        compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${springRabbitVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework/spring-context-support
-        compile group: 'org.springframework', name: 'spring-context-support', version: "${rootProject.springFrameworkVersion}"
+        compile group: 'org.springframework', name: 'spring-context-support', version: "${springFrameworkVersion}"
 
         // https://mvnrepository.com/artifact/org.freemarker/freemarker
         compile group: 'org.freemarker', name: 'freemarker', version: '2.3.27-incubating'
     }
 }
 
-project(':services:profile:rest-api') {
+project(':rest-api') {
     dependencies {
-        compile project(':services:profile:evelyn-service')
+        compile project(':evelyn-service')
 
         // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-        compileOnly group: 'org.springframework', name: 'spring-webmvc', version: "${rootProject.springFrameworkVersion}"
+        compileOnly group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
     }
 }
 
-project(':services:profile:web-app') {
+project(':web-app') {
     dependencies {
-        runtime project(':services:profile:rest-api')
+        runtime project(':rest-api')
 
-        compile project(':libraries:authentication')
-        compile project(':libraries:remote-configuration')
+        compile group: 'org.evelyn.library', name: 'authentication', version: '1.0.0-SNAPSHOT'
+        compile group: 'org.evelyn.library', name: 'remote-configuration', version: '1.0.0-SNAPSHOT'
     }
 }

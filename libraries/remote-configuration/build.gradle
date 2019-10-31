@@ -1,14 +1,32 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 repositories {
     jcenter()
 }
 
+ext {
+    springBootVersion = '2.1.8.RELEASE'
+    jetcdVersion = '0.3.0'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.evelyn.library'
+            artifactId = 'remote-configuration'
+            version = '1.0.0-SNAPSHOT'
+
+            from components.java
+        }
+    }
+}
+
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    compileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${rootProject.springBootVersion}"
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
 
-    compile "io.etcd:jetcd-core:${rootProject.jetcdVersion}"
+    compile "io.etcd:jetcd-core:${jetcdVersion}"
 }

@@ -2,50 +2,50 @@ subprojects {
     apply plugin: 'java'
 
     repositories {
+        mavenLocal()
         jcenter()
     }
-
-    dependencies {
-        // https://mvnrepository.com/artifact/org.springframework/spring-context
-        compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
-
-        // https://mvnrepository.com/artifact/org.projectlombok/lombok
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
-        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
-    }
 }
 
-project(':services:group:evelyn-service') {
+ext {
+    springFrameworkVersion = '5.1.9.RELEASE'
+    springMongoVersion = '2.2.0.RELEASE'
+    keycloakSpringVersion = '4.0.0.Final'
+    springBootVersion = '2.1.8.RELEASE'
+    lombokVersion = '1.18.10'
+}
+
+project(':evelyn-service') {
     dependencies {
-        compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${rootProject.springMongoVersion}"
+        compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${springMongoVersion}"
 
         // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
-        compile group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${rootProject.keycloakSpringVersion}"
+        compile group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
 
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
-        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
     }
 }
 
-project(':services:group:rest-api') {
+project(':rest-api') {
     dependencies {
-        compile project(':services:group:evelyn-service')
+        compile project(':evelyn-service')
 
         // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-        compile group: 'org.springframework', name: 'spring-webmvc', version: "${rootProject.springFrameworkVersion}"
+        compile group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
     }
 }
 
-project(':services:group:web-app') {
+project(':web-app') {
     dependencies {
-        compile project(':services:group:rest-api')
+        compile project(':rest-api')
 
-        compile project(':libraries:authentication')
+        compile group: 'org.evelyn.library', name: 'authentication', version: '1.0.0-SNAPSHOT'
 
         // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${rootProject.springBootVersion}"
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
 
-        compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
+        compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
     }
 }

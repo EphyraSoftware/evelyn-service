@@ -8,9 +8,14 @@ repositories {
     jcenter()
 }
 
+ext {
+    springCloudZuulVersion = '1.4.7.RELEASE'
+    springBootVersion = '2.1.8.RELEASE'
+}
+
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-zuul
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-zuul', version: "${rootProject.springCloudZuulVersion}"
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-zuul', version: "${springCloudZuulVersion}"
 
-    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
 }

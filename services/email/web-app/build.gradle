@@ -1,11 +1,3 @@
 plugins {
     id 'org.springframework.boot' version '2.0.0.RELEASE'
-    id 'java'
-}
-
-dependencies {
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${rootProject.springBootVersion}"
-
-    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
 }

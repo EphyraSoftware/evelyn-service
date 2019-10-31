@@ -1,13 +1,30 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 repositories {
     jcenter()
 }
 
+ext {
+    lombokVersion = '1.18.10'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.evelyn.library'
+            artifactId = 'message-models'
+            version = '1.0.0-SNAPSHOT'
+
+            from components.java
+        }
+    }
+}
+
 dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
 }

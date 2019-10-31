@@ -8,13 +8,17 @@ repositories {
     jcenter()
 }
 
+ext {
+    springBootVersion = '2.1.8.RELEASE'
+}
+
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${rootProject.springBootVersion}"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
 
-    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${rootProject.springBootVersion}"
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
 
-    runtime project(':services:profile:rest-api')
+//    runtime project(':services:profile')
     runtime project(':services:group:rest-api')
 
     runtime project(':services:email:evelyn-service')

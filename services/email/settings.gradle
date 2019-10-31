@@ -1,0 +1,4 @@
+rootProject.name = 'evelyn-email-service'
+
+include ':evelyn-service',
+        ':web-app'

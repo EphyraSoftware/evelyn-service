@@ -1,17 +1,9 @@
-rootProject.name = 'evelyn-service'
+rootProject.name = 'evelyn'
 
-include 'libraries:authentication',
-        'libraries:message-models',
-        'libraries:remote-configuration'
+include ':libraries:authentication',
+        ':libraries:message-models',
+        ':libraries:remote-configuration'
 
-include 'services:email:api', 'services:email:evelyn-service', 'services:email:messaging:api',
-        'services:email:messaging:rabbit', 'services:email:web-app'
-include 'services:profile:evelyn-service', 'services:profile:rest-api', 'services:profile:web-app'
-include 'services:group:api', 'services:group:evelyn-service', 'services:group:repository:api',
-        'services:group:rest-api', 'services:group:web-app', 'services:group:repository:mongo'
-
-// Monolith server
-include 'server:evelyn-monolith'
-
-// Entry point (proxy)
-include 'server:evelyn-web-entry-point'
+file('services').listFiles().each { File moduleBuild ->
+    includeBuild moduleBuild
+}

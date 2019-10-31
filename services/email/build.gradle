@@ -2,23 +2,38 @@ subprojects {
     apply plugin: 'java'
 
     repositories {
+        mavenLocal()
         jcenter()
     }
 }
 
-project(':services:email:evelyn-service') {
+ext {
+    springFrameworkVersion = '5.1.9.RELEASE'
+    springRabbitVersion = '2.1.11.RELEASE'
+    javaxMailVersion = '1.6.1'
+    lombokVersion = '1.18.10'
+    springBootVersion = '2.1.8.RELEASE'
+}
+
+project(":evelyn-service") {
     dependencies {
-        compile project(':libraries:message-models')
+        compile group: 'org.evelyn.library.messages', name: 'message-models', version: '1.0.0-SNAPSHOT'
 
         // https://mvnrepository.com/artifact/org.springframework/spring-context
-        compile group: 'org.springframework', name: 'spring-context', version: "${rootProject.springFrameworkVersion}"
+        compile group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-context-support
+        compile group: 'org.springframework', name: 'spring-context-support', version: "${springFrameworkVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
-        compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${rootProject.springRabbitVersion}"
+        compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${springRabbitVersion}"
+
+        // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
+        compile group: 'com.sun.mail', name: 'javax.mail', version: "${javaxMailVersion}"
 
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
-        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${rootProject.lombokVersion}"
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
 
         // TODO Use me for writing some tests!
         // https://mvnrepository.com/artifact/com.icegreen/greenmail
@@ -26,8 +41,13 @@ project(':services:email:evelyn-service') {
     }
 }
 
-project(':services:email:web-app') {
+project(':web-app') {
     dependencies {
-        runtime project(':services:email:evelyn-service')
+        runtime project(':evelyn-service')
+
+        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
+
+        compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
     }
 }

@@ -1,0 +1,5 @@
+rootProject.name = 'evelyn-profile-service'
+
+include ':evelyn-service',
+        ':rest-api',
+        'web-app'

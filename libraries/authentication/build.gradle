@@ -1,15 +1,33 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 repositories {
     jcenter()
 }
 
+ext {
+    keycloakSpringVersion = '4.0.0.Final'
+    springBootVersion = '2.1.8.RELEASE'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.evelyn.library'
+            artifactId = 'authentication'
+            version = '1.0.0-SNAPSHOT'
+
+            from components.java
+        }
+    }
+}
+
 dependencies {
     // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
-    compile group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${rootProject.keycloakSpringVersion}"
+    compile group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${rootProject.springBootVersion}"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${springBootVersion}"
 }
