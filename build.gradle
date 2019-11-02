@@ -2,3 +2,29 @@ task buildApps {
     group = 'meta'
     dependsOn gradle.includedBuilds*.task(':web-app:build')
 }
+
+task localPublishLibraries {
+    group = 'meta'
+    subprojects.findAll { subProject ->
+        subProject.afterEvaluate {
+            subProject.tasks.findAll { task ->
+                if (task.name == 'localPublish') {
+                    dependsOn task
+                }
+            }
+        }
+    }
+}
+
+task gitHubPublishLibraries {
+    group = 'meta'
+    subprojects.findAll { subProject ->
+        subProject.afterEvaluate {
+            subProject.tasks.findAll { task ->
+                if (task.name == 'gitHubPublish') {
+                    dependsOn task
+                }
+            }
+        }
+    }
+}

@@ -11,20 +11,43 @@ ext {
     lombokVersion = '1.18.10'
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'org.evelyn.library'
-            artifactId = 'message-models'
-            version = '1.0.0-SNAPSHOT'
-
-            from components.java
-        }
-    }
-}
+group = 'org.evelyn.library'
 
 dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            version = 'dev-local' // Publish a rolling dev-local version
+            from components.java
+        }
+        gpr(MavenPublication) {
+            version = 'dev' // Publish a rolling dev version
+            from(components.java)
+        }
+    }
+}
+
+task localPublish {
+    group = 'evelyn'
+    dependsOn publishToMavenLocal
+}
+
+task gitHubPublish {
+    group = 'evelyn'
+    dependsOn publishGprPublicationToGitHubPackagesRepository
 }

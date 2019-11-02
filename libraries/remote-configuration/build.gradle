@@ -12,17 +12,7 @@ ext {
     jetcdVersion = '0.3.0'
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'org.evelyn.library'
-            artifactId = 'remote-configuration'
-            version = '1.0.0-SNAPSHOT'
-
-            from components.java
-        }
-    }
-}
+group = 'org.evelyn.library'
 
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
@@ -30,3 +20,38 @@ dependencies {
 
     compile "io.etcd:jetcd-core:${jetcdVersion}"
 }
+
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            version = 'dev-local' // Publish a rolling dev-local version
+            from components.java
+        }
+        gpr(MavenPublication) {
+            version = 'dev' // Publish a rolling dev version
+            from(components.java)
+        }
+    }
+}
+
+task localPublish {
+    group = 'evelyn'
+    dependsOn publishToMavenLocal
+}
+
+task gitHubPublish {
+    group = 'evelyn'
+    dependsOn publishGprPublicationToGitHubPackagesRepository
+}
+

@@ -12,17 +12,7 @@ ext {
     springBootVersion = '2.1.8.RELEASE'
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'org.evelyn.library'
-            artifactId = 'authentication'
-            version = '1.0.0-SNAPSHOT'
-
-            from components.java
-        }
-    }
-}
+group = 'org.evelyn.library'
 
 dependencies {
     // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
@@ -30,4 +20,37 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${springBootVersion}"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            version = 'dev-local' // Publish a rolling dev-local version
+            from components.java
+        }
+        gpr(MavenPublication) {
+            version = 'dev' // Publish a rolling dev version
+            from(components.java)
+        }
+    }
+}
+
+task localPublish {
+    group = 'evelyn'
+    dependsOn publishToMavenLocal
+}
+
+task gitHubPublish {
+    group = 'evelyn'
+    dependsOn publishGprPublicationToGitHubPackagesRepository
 }
