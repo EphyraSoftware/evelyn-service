@@ -1,15 +1,17 @@
 plugins {
-    // TODO Can only use literals in this block... Want to set version with variable.
     id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'java'
 }
 
 repositories {
     jcenter()
+    mavenLocal()
 }
 
 ext {
     springBootVersion = '2.1.8.RELEASE'
+
+    libraryAuthenticationVersion = 'dev-local'
 }
 
 dependencies {
@@ -18,8 +20,11 @@ dependencies {
 
     compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
 
-//    runtime project(':services:profile')
-    runtime project(':services:group:rest-api')
+    implementation group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
 
-    runtime project(':services:email:evelyn-service')
+    // Only actually need runtime but that confuses IntelliJ with package scans. It's a development only project so
+    // implementation will do just fine.
+    implementation 'org.evelyn.service:email-service:dev-local'
+    implementation 'org.evelyn.service:group-service-rest-api:dev-local'
+    implementation 'org.evelyn.service:profile-service-rest-api:dev-local'
 }

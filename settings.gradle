@@ -4,6 +4,8 @@ include ':libraries:authentication',
         ':libraries:message-models',
         ':libraries:remote-configuration'
 
+include ':server:evelyn-monolith'
+
 file('services').listFiles().each { File moduleBuild ->
     includeBuild moduleBuild
 }

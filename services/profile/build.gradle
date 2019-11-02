@@ -2,8 +2,16 @@ subprojects {
     apply plugin: 'java'
 
     repositories {
-        mavenLocal()
         jcenter()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        mavenLocal()
     }
 }
 
@@ -15,11 +23,15 @@ ext {
     springMongoVersion = '2.2.0.RELEASE'
     springRabbitVersion = '2.1.11.RELEASE'
     lombokVersion = '1.18.10'
+
+    libraryAuthenticationVersion = 'dev-local'
+    libraryMessageModelsVersion = 'dev-local'
+    libraryRemoteConfigurationVersion = 'dev-local'
 }
 
 project(":evelyn-service") {
     dependencies {
-        compile group: 'org.evelyn.library', name: 'message-models', version: '1.0.0-SNAPSHOT'
+        compile group: 'org.evelyn.library', name: 'message-models', version: "${libraryMessageModelsVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb
         compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${springMongoVersion}"
@@ -40,11 +52,25 @@ project(":evelyn-service") {
 }
 
 project(':rest-api') {
+    apply plugin: 'maven-publish'
+
+    group = 'org.evelyn.service'
+
     dependencies {
         compile project(':evelyn-service')
 
         // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
         compileOnly group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifactId = 'profile-service-rest-api'
+                version = 'dev-local' // Publish a rolling dev-local version
+                from components.java
+            }
+        }
     }
 }
 
@@ -52,7 +78,12 @@ project(':web-app') {
     dependencies {
         runtime project(':rest-api')
 
-        compile group: 'org.evelyn.library', name: 'authentication', version: '1.0.0-SNAPSHOT'
-        compile group: 'org.evelyn.library', name: 'remote-configuration', version: '1.0.0-SNAPSHOT'
+        compile group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
+        compile group: 'org.evelyn.library', name: 'remote-configuration', version: "${libraryRemoteConfigurationVersion}"
     }
+}
+
+task localPublish {
+    group = 'evelyn'
+    dependsOn ':rest-api:publishToMavenLocal'
 }

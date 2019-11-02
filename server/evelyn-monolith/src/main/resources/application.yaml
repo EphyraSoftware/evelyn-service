@@ -4,8 +4,18 @@ spring:
 
 org:
   evelyn:
+    email:
+      email-input-queue-name: send-mail
+    group:
+      mongo-connection-string: mongodb://localhost:9081
+      profile-service-url: http://localhost:8081
     profile:
       mongo-connection-string: mongodb://localhost:9081
       email-input-queue-name: send-mail
-    email:
-      email-input-queue-name: send-mail
+
+keycloak:
+  auth-server-url: http://localhost:9083/auth
+  realm: evelyn-services-realm
+  public-client: true
+  resource: evelyn-ui
+  principal-attribute: preferred_username

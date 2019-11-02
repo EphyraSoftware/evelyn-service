@@ -28,3 +28,10 @@ task gitHubPublishLibraries {
         }
     }
 }
+
+task localPublishServices {
+    group = 'meta'
+    gradle.includedBuilds.forEach { build ->
+        dependsOn build.task(':localPublish')
+    }
+}

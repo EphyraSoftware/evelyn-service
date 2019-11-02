@@ -2,8 +2,16 @@ subprojects {
     apply plugin: 'java'
 
     repositories {
-        mavenLocal()
         jcenter()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        mavenLocal()
     }
 }
 
@@ -13,11 +21,17 @@ ext {
     javaxMailVersion = '1.6.1'
     lombokVersion = '1.18.10'
     springBootVersion = '2.1.8.RELEASE'
+
+    libraryAuthenticationVersion = 'dev-local'
 }
 
 project(":evelyn-service") {
+    apply plugin: 'maven-publish'
+
+    group = 'org.evelyn.service'
+
     dependencies {
-        compile group: 'org.evelyn.library.messages', name: 'message-models', version: '1.0.0-SNAPSHOT'
+        compile group: 'org.evelyn.library', name: 'message-models', version: "${libraryAuthenticationVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework/spring-context
         compile group: 'org.springframework', name: 'spring-context', version: "${springFrameworkVersion}"
@@ -39,6 +53,16 @@ project(":evelyn-service") {
         // https://mvnrepository.com/artifact/com.icegreen/greenmail
         //testCompile group: 'com.icegreen', name: 'greenmail', version: '1.5.10'
     }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifactId = 'email-service'
+                version = 'dev-local' // Publish a rolling dev-local version
+                from components.java
+            }
+        }
+    }
 }
 
 project(':web-app') {
@@ -50,4 +74,9 @@ project(':web-app') {
 
         compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
     }
+}
+
+task localPublish {
+    group = 'evelyn'
+    dependsOn ':evelyn-service:publishToMavenLocal'
 }

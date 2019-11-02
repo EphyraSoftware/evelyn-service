@@ -2,8 +2,16 @@ subprojects {
     apply plugin: 'java'
 
     repositories {
-        mavenLocal()
         jcenter()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+        mavenLocal()
     }
 }
 
@@ -13,6 +21,8 @@ ext {
     keycloakSpringVersion = '4.0.0.Final'
     springBootVersion = '2.1.8.RELEASE'
     lombokVersion = '1.18.10'
+
+    libraryAuthenticationVersion = 'dev-local'
 }
 
 project(':evelyn-service') {
@@ -29,11 +39,25 @@ project(':evelyn-service') {
 }
 
 project(':rest-api') {
+    apply plugin: 'maven-publish'
+
+    group = 'org.evelyn.service'
+
     dependencies {
         compile project(':evelyn-service')
 
         // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
         compile group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifactId = 'group-service-rest-api'
+                version = 'dev-local' // Publish a rolling dev-local version
+                from components.java
+            }
+        }
     }
 }
 
@@ -41,11 +65,16 @@ project(':web-app') {
     dependencies {
         compile project(':rest-api')
 
-        compile group: 'org.evelyn.library', name: 'authentication', version: '1.0.0-SNAPSHOT'
+        implementation group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
         compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
 
         compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
     }
+}
+
+task localPublish {
+    group = 'evelyn'
+    dependsOn ':rest-api:publishToMavenLocal'
 }
