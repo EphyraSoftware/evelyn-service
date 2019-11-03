@@ -11,3 +11,5 @@ gradlew.bat
 
 # Build ignores
 build
+work
+bin
