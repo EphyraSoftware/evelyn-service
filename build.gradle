@@ -35,3 +35,17 @@ task localPublishServices {
         dependsOn build.task(':localPublish')
     }
 }
+
+task localBuildImages {
+    group = 'meta'
+    gradle.includedBuilds.forEach { build ->
+        dependsOn build.task(':buildImage')
+    }
+}
+
+task gitHubPublishImages {
+    group = 'meta'
+    gradle.includedBuilds.forEach { build ->
+        dependsOn build.task(':gitHubDockerPush')
+    }
+}
