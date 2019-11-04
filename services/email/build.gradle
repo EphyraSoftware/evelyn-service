@@ -76,12 +76,22 @@ project(':web-app') {
     }
 }
 
+/*
+ * ******************
+ * Local JAR publishing.
+ * ******************
+ */
 task localPublish {
     group = 'evelyn'
     description 'Publishes the core of the service to be used by the monolith server.'
     dependsOn ':evelyn-service:publishToMavenLocal'
 }
 
+/*
+ * ******************
+ * Image packaging.
+ * ******************
+ */
 task deleteImageSource(type: Delete) {
     description 'Removes the working copy of the project sources.'
     delete 'work'
@@ -122,3 +132,37 @@ task copyWebAppBuild(type: Copy) {
 // Pack does not understand which sub-project to collect build artefacts from, so copy the sub-project build output
 // after the build task for it completes.
 project.tasks.findByPath(':web-app:build').finalizedBy(project.tasks.findByName('copyWebAppBuild'))
+
+/*
+ * ******************
+ * Image publishing.
+ * ******************
+ */
+task gitHubDockerLogin(type: Exec) {
+    description 'Log into the GitHub\'s Docker package repository.'
+
+    commandLine 'cmd', '/c', 'docker', 'login',
+            'docker.pkg.github.com',
+            '-u', project.findProperty("gpr.user") ?: System.getenv("GPR_USER"),
+            '-p', project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+}
+
+task gitHubDockerTag(type: Exec) {
+    description 'Tag the locally built image for this project with the GitHub Docker package repository prefix.'
+    
+    dependsOn project.tasks.findByName('gitHubDockerLogin')
+
+    commandLine 'cmd', '/c', 'docker', 'tag',
+        project.name,
+        "docker.pkg.github.com/ephyrasoftware/evelyn-service/${project.name}:dev"
+}
+
+task gitHubDockerPush(type: Exec) {
+    group = 'evelyn'
+    description 'Publish a development image to the GitHub Docker package repository.'
+
+    dependsOn project.tasks.findByName('gitHubDockerTag')
+
+    commandLine 'cmd', '/c', 'docker', 'push',
+            "docker.pkg.github.com/ephyrasoftware/evelyn-service/${project.name}:dev"
+}
