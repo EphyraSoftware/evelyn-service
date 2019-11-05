@@ -8,7 +8,7 @@ repositories {
 }
 
 ext {
-    springBootVersion = '2.1.8.RELEASE'
+    springBootVersion = '2.2.0.RELEASE'
     jetcdVersion = '0.3.0'
 }
 
@@ -41,7 +41,7 @@ publishing {
             from components.java
         }
         gpr(MavenPublication) {
-            version = 'dev' // Publish a rolling dev version
+            version = 'dev-2' // Publish a dev version (gpr does not support rolling nicely)
             from(components.java)
         }
     }

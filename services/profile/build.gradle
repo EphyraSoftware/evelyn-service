@@ -13,15 +13,18 @@ subprojects {
         }
         mavenLocal()
     }
+
+    sourceCompatibility = 13
+    targetCompatibility = 13
 }
 
 project.version = '0.1.0'
 
 ext {
-    springFrameworkVersion = '5.1.9.RELEASE'
-    springBootVersion = '2.1.8.RELEASE'
-    springMongoVersion = '2.2.0.RELEASE'
-    springRabbitVersion = '2.1.11.RELEASE'
+    springFrameworkVersion = '5.2.1.RELEASE'
+    springBootVersion = '2.2.0.RELEASE'
+    springMongoVersion = '2.2.1.RELEASE'
+    springRabbitVersion = '2.2.1.RELEASE'
     lombokVersion = '1.18.10'
 
     libraryAuthenticationVersion = System.getenv("LIBRARY_AUTHENTICATION_VERSION") ?: 'dev-local'
@@ -74,15 +77,6 @@ project(':rest-api') {
     }
 }
 
-project(':web-app') {
-    dependencies {
-        runtimeOnly project(':rest-api')
-
-        implementation group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
-        implementation group: 'org.evelyn.library', name: 'remote-configuration', version: "${libraryRemoteConfigurationVersion}"
-    }
-}
-
 /*
  * ******************
  * Local JAR publishing.
@@ -111,7 +105,7 @@ task copyImageSource(type: Copy) {
 
     from '.'
     into 'work'
-    exclude '.gradle', 'work'
+    exclude '.gradle', 'work', 'build'
 }
 
 task buildImage(type: Exec) {
@@ -125,11 +119,12 @@ task buildImage(type: Exec) {
             // Note that coping the .gradle directory doesn't work due to locks so project sources are copied and built
             // from a working directory.
             '--path', 'work',
+            '--env', 'BP_JAVA_VERSION=13.*',
             '--env', "GPR_USER=${project.findProperty("gpr.user") ?: System.getenv("GPR_USER")}",
             '--env', "GPR_API_KEY=${project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")}",
-            '--env', 'LIBRARY_AUTHENTICATION_VERSION=dev',
-            '--env', 'LIBRARY_MESSAGE_MODELS_VERSION=dev',
-            '--env', 'LIBRARY_REMOTE_CONFIGURATION_VERSION=dev'
+            '--env', 'LIBRARY_AUTHENTICATION_VERSION=dev-2',
+            '--env', 'LIBRARY_MESSAGE_MODELS_VERSION=dev-2',
+            '--env', 'LIBRARY_REMOTE_CONFIGURATION_VERSION=dev-2'
 }
 
 task copyWebAppBuild(type: Copy) {

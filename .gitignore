@@ -1,6 +1,5 @@
 # Gradle ignores
 .gradle
-gradle/
 .settings
 
 # IntelliJ ignores

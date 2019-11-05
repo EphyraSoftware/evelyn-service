@@ -1,6 +1,6 @@
 plugins {
     // TODO Can only use literals in this block... Want to set version with variable.
-    id 'org.springframework.boot' version '2.1.8.RELEASE'
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
     id 'java'
 }
 
@@ -10,7 +10,7 @@ repositories {
 
 ext {
     springCloudZuulVersion = '1.4.7.RELEASE'
-    springBootVersion = '2.1.8.RELEASE'
+    springBootVersion = '2.2.0.RELEASE'
 }
 
 dependencies {
