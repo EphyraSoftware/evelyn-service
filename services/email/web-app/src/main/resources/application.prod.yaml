@@ -1,0 +1,9 @@
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+
+org:
+  evelyn:
+    email:
+      email-input-queue-name: send-mail

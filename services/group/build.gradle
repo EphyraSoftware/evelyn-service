@@ -29,10 +29,10 @@ ext {
 
 project(':evelyn-service') {
     dependencies {
-        compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${springMongoVersion}"
+        implementation group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${springMongoVersion}"
 
         // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
-        compile group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
+        implementation group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
 
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
         compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
@@ -46,10 +46,10 @@ project(':rest-api') {
     group = 'org.evelyn.service'
 
     dependencies {
-        compile project(':evelyn-service')
+        implementation project(':evelyn-service')
 
         // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-        compile group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
+        implementation group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
     }
 
     publishing {
@@ -65,12 +65,12 @@ project(':rest-api') {
 
 project(':web-app') {
     dependencies {
-        compile project(':rest-api')
+        implementation project(':rest-api')
 
         implementation group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
 
         compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
     }

@@ -11,6 +11,9 @@ ext {
     lombokVersion = '1.18.10'
 }
 
+sourceCompatibility = 13
+targetCompatibility = 13
+
 group = 'org.evelyn.library'
 
 dependencies {

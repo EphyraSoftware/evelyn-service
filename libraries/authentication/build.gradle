@@ -12,14 +12,17 @@ ext {
     springBootVersion = '2.1.8.RELEASE'
 }
 
+sourceCompatibility = 13
+targetCompatibility = 13
+
 group = 'org.evelyn.library'
 
 dependencies {
     // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
-    compile group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
+    implementation group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${springBootVersion}"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${springBootVersion}"
 }
 
 publishing {

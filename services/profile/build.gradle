@@ -31,23 +31,23 @@ ext {
 
 project(":evelyn-service") {
     dependencies {
-        compile group: 'org.evelyn.library', name: 'message-models', version: "${libraryMessageModelsVersion}"
+        implementation group: 'org.evelyn.library', name: 'message-models', version: "${libraryMessageModelsVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb
-        compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${springMongoVersion}"
+        implementation group: 'org.springframework.data', name: 'spring-data-mongodb', version: "${springMongoVersion}"
 
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
         compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
         annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
-        compile group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${springRabbitVersion}"
+        implementation group: 'org.springframework.amqp', name: 'spring-rabbit', version: "${springRabbitVersion}"
 
         // https://mvnrepository.com/artifact/org.springframework/spring-context-support
-        compile group: 'org.springframework', name: 'spring-context-support', version: "${springFrameworkVersion}"
+        implementation group: 'org.springframework', name: 'spring-context-support', version: "${springFrameworkVersion}"
 
         // https://mvnrepository.com/artifact/org.freemarker/freemarker
-        compile group: 'org.freemarker', name: 'freemarker', version: '2.3.27-incubating'
+        implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.27-incubating'
     }
 }
 
@@ -57,7 +57,7 @@ project(':rest-api') {
     group = 'org.evelyn.service'
 
     dependencies {
-        compile project(':evelyn-service')
+        implementation project(':evelyn-service')
 
         // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
         compileOnly group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
@@ -76,10 +76,10 @@ project(':rest-api') {
 
 project(':web-app') {
     dependencies {
-        runtime project(':rest-api')
+        runtimeOnly project(':rest-api')
 
-        compile group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
-        compile group: 'org.evelyn.library', name: 'remote-configuration', version: "${libraryRemoteConfigurationVersion}"
+        implementation group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
+        implementation group: 'org.evelyn.library', name: 'remote-configuration', version: "${libraryRemoteConfigurationVersion}"
     }
 }
 
