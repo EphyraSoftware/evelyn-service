@@ -32,6 +32,10 @@ task gitHubPublishLibraries {
 task localPublishServices {
     group = 'meta'
     gradle.includedBuilds.forEach { build ->
+        if (build.name == 'evelyn-web-entry-point') {
+            return
+        }
+
         dependsOn build.task(':localPublish')
     }
 }

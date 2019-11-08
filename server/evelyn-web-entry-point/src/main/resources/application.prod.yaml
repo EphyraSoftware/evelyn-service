@@ -1,0 +1,11 @@
+zuul:
+  routes:
+    profile:
+      path: /profile/**
+      url: http://${PROFILE_SERVICE_HOST}/profile
+    group:
+      path: /groups/**
+      url: http://${GROUP_SERVICE_HOST}/groups
+
+server:
+  port: 5000
