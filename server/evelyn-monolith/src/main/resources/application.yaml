@@ -6,6 +6,17 @@ org:
   evelyn:
     email:
       email-input-queue-name: send-mail
+      mail:
+        host: localhost
+        port: 3025
+        username: evelynmailer
+        password: passwd
+        properties:
+          mail.transport.protocol: smtp
+          mail.smtp.host: localhost
+          mail.smtp.auth: true
+          mail.smtp.starttls.enable: true
+          mail.debug: true
     group:
       mongo-connection-string: mongodb://localhost:9081
       profile-service-url: http://localhost:8081

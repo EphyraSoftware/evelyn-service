@@ -1,19 +1,19 @@
 spring:
   rabbitmq:
-    port: 9082
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
 
 org:
   evelyn:
     email:
       email-input-queue-name: send-mail
       mail:
-        host: localhost
-        port: 3025
-        username: evelynmailer
-        password: passwd
+        host: ${MAIL_HOST}
+        port: ${MAIL_PORT}
+        username: ${MAIL_USERNAME}
+        password: ${MAIL_PASSWORD}
         properties:
           mail.transport.protocol: smtp
-          mail.smtp.host: localhost
+          mail.smtp.host: ${MAIL_SMTP_HOST}
           mail.smtp.auth: true
           mail.smtp.starttls.enable: true
-          mail.debug: true

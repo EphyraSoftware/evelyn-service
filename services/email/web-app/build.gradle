@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    runtimeOnly project(':evelyn-service')
+    implementation project(':evelyn-service')
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
