@@ -1,9 +1,9 @@
 zuul:
   routes:
-    users:
-      path: /users/**
-      url: http://localhost:8081/users
-    groups:
+    profile:
+      path: /profiles/**
+      url: http://localhost:8081/profiles
+    group:
       path: /groups/**
       url: http://localhost:8082/groups
 

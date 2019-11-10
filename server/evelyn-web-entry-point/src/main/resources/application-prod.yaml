@@ -1,8 +1,8 @@
 zuul:
   routes:
     profile:
-      path: /profile/**
-      url: http://${PROFILE_SERVICE_HOST}/profile
+      path: /profiles/**
+      url: http://${PROFILE_SERVICE_HOST}/profiles
     group:
       path: /groups/**
       url: http://${GROUP_SERVICE_HOST}/groups

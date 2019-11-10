@@ -17,14 +17,15 @@ spec:
     spec:
       containers:
         - name: evelyn-web-entry-point
+          imagePullPolicy: Always
           image: docker.pkg.github.com/ephyrasoftware/evelyn-service/evelyn-web-entry-point:dev
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
             - name: PROFILE_SERVICE_HOST
-              value: "evelyn-profile-service:8080"
+              value: "evelyn-profile-service.evelyn-services:8080"
             - name: GROUP_SERVICE_HOST
-              value: "evelyn-group-service:8080"
+              value: "evelyn-group-service.evelyn-services:8080"
           ports:
             - containerPort: 5000
       imagePullSecrets:
