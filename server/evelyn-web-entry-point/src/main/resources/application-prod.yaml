@@ -9,3 +9,12 @@ zuul:
 
 server:
   port: 5000
+  ssl:
+    key-store-type: PKCS12
+    key-store: /etc/web-entry-point/web-entry-point-keystore.p12
+    # TODO Get me from somewhere else.
+    key-store-password: password
+    key-alias: web-entry-point
+
+security:
+  require-ssl: true

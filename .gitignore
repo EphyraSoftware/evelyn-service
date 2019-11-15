@@ -10,3 +10,11 @@
 build
 work
 bin
+
+.terraform
+*.secret.txt
+*.tfstate
+*.tfstate.backup
+*.crt
+*.key
+*.p12
