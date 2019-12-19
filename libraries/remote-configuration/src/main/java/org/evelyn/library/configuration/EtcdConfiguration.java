@@ -39,7 +39,12 @@ class EtcdConfiguration {
     var properties = new HashMap<String, SettableProperty>();
 
     beansWithAnnotation.forEach((name, bean) -> {
-      String prefix = bean.getClass().getAnnotation(ConfigurationProperties.class).prefix();
+      var propertySourceAnnotation = bean.getClass().getAnnotation(ConfigurationProperties.class);
+      if (propertySourceAnnotation == null) {
+        return;
+      }
+
+      String prefix = propertySourceAnnotation.prefix();
       try {
         mapProperties(bean, properties, prefix);
       } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {

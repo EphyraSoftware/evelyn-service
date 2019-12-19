@@ -2,19 +2,26 @@ zuul:
   routes:
     profile:
       path: /profiles/**
-      url: http://${PROFILE_SERVICE_HOST}/profiles
+      url: https://${PROFILE_SERVICE_HOST}/profiles
+      sensitiveHeaders: Cookie,Set-Cookie
     group:
       path: /groups/**
-      url: http://${GROUP_SERVICE_HOST}/groups
+      url: https://${GROUP_SERVICE_HOST}/groups
 
 server:
   port: 5000
+  http2:
+    enabled: true
+
   ssl:
     key-store-type: PKCS12
-    key-store: /etc/web-entry-point/web-entry-point-keystore.p12
-    # TODO Get me from somewhere else.
-    key-store-password: password
-    key-alias: web-entry-point
+    key-store: /etc/evelyn/web-entry-point-keystore.p12
+    key-store-password: changeit
+    key-alias: 1
+    trust-store: /etc/evelyn/truststore.p12
+    trust-store-password: changeit
 
-security:
-  require-ssl: true
+ribbon:
+  IsSecure: true
+  TrustStore: /etc/evelyn/truststore.p12
+  TrustStorePassword: changeit

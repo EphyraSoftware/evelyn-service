@@ -122,7 +122,7 @@ task buildImage(type: Exec) {
             '--env', 'BP_JAVA_VERSION=13.*',
             '--env', "GPR_USER=${project.findProperty("gpr.user") ?: System.getenv("GPR_USER")}",
             '--env', "GPR_API_KEY=${project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")}",
-            '--env', 'LIBRARY_AUTHENTICATION_VERSION=dev-2',
+            '--env', 'LIBRARY_AUTHENTICATION_VERSION=dev-3',
             '--env', 'LIBRARY_MESSAGE_MODELS_VERSION=dev-2',
             '--env', 'LIBRARY_REMOTE_CONFIGURATION_VERSION=dev-2'
 }

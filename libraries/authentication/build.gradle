@@ -42,7 +42,7 @@ publishing {
             from components.java
         }
         gpr(MavenPublication) {
-            version = 'dev-2' // Publish a dev version (gpr does not support rolling nicely)
+            version = 'dev-3' // Publish a dev version (gpr does not support rolling nicely)
             from(components.java)
         }
     }

@@ -6,6 +6,7 @@ spring:
 
 org:
   evelyn:
+    tlsEnabled: false
     etcd-url: http://localhost:2379
     profile:
       mongo-connection-string: mongodb://localhost:9081

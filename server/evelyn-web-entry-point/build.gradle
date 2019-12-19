@@ -11,13 +11,12 @@ repositories {
 project.version = '0.1.0'
 
 ext {
-    springCloudZuulVersion = '1.4.7.RELEASE'
     springBootVersion = '2.2.0.RELEASE'
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-zuul
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-zuul', version: "${springCloudZuulVersion}"
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-zuul
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-zuul', version: "${springBootVersion}"
 
     compileOnly group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${springBootVersion}"
 }

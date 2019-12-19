@@ -10,6 +10,7 @@ import org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter;
 import org.keycloak.adapters.springsecurity.management.HttpSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,9 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @KeycloakConfiguration
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 public class KeycloakSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter {
+
+  @Value("${org.evelyn.tlsEnabled}")
+  private boolean tlsEnabled;
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -85,10 +89,14 @@ public class KeycloakSecurityConfiguration extends KeycloakWebSecurityConfigurer
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
-    http
+    var httpChain = http
             .csrf().disable() // TODO temp!
             .authorizeRequests()
             .antMatchers(HttpMethod.OPTIONS,"**").permitAll()
             .anyRequest().authenticated();
+
+    if (tlsEnabled) {
+      httpChain.and().requiresChannel().anyRequest().requiresSecure();
+    }
   }
 }

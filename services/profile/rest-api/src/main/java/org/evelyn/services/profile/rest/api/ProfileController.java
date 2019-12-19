@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 public class ProfileController {
     private final ProfileService profileService;

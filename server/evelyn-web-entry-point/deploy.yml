@@ -23,14 +23,16 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
             - name: PROFILE_SERVICE_HOST
-              value: "evelyn-profile-service.evelyn-services:8080"
+              value: "evelyn-profile-service.evelyn-services.svc.cluster.local:8080"
             - name: GROUP_SERVICE_HOST
               value: "evelyn-group-service.evelyn-services:8080"
+            - name: ROOT_LOG_LEVEL
+              value: debug
           ports:
             - containerPort: 5000
           volumeMounts:
           - name: web-entry-point-keystore
-            mountPath: "/etc/web-entry-point"
+            mountPath: "/etc/evelyn"
             readOnly: true
       volumes:
         - name: web-entry-point-keystore
