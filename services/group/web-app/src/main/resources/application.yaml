@@ -10,6 +10,7 @@ keycloak:
 
 org:
   evelyn:
+    tlsEnabled: false
     group:
       mongo-connection-string: mongodb://localhost:9081
       profile-service-url: http://localhost:8081

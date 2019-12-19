@@ -1,5 +1,12 @@
 server:
   port: 8080
+  ssl:
+    key-store-type: PKCS12
+    key-store: /etc/evelyn/group-service-keystore.p12
+    key-store-password: changeit
+    key-alias: 1
+    trust-store: /etc/evelyn/truststore.p12
+    trust-store-password: changeit
 
 keycloak:
   auth-server-url: ${KEYCLOAK_AUTH_URL}
@@ -10,6 +17,7 @@ keycloak:
 
 org:
   evelyn:
+    tlsEnabled: true
     group:
       mongo-connection-string: ${MONGO_CONNECTION_URI}
       profile-service-url: ${PROFILE_SERVICE_BASE_URL}
