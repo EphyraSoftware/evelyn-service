@@ -4,6 +4,7 @@ spring:
 
 org:
   evelyn:
+    tlsEnabled: false
     email:
       email-input-queue-name: send-mail
       mail:

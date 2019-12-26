@@ -40,6 +40,12 @@ task localPublishServices {
     }
 }
 
+task start {
+    group = 'meta'
+    dependsOn 'localPublishServices'
+    finalizedBy ':server:evelyn-monolith:bootRun'
+}
+
 task localBuildImages {
     group = 'meta'
     gradle.includedBuilds.forEach { build ->
