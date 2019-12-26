@@ -4,6 +4,15 @@ services:
     image: mongo:4.1
     ports:
       - 9081:27017
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: 100M
     # Doesn't work on Windows
     #volumes:
     #  - ./data/db:/data/db
@@ -12,6 +21,15 @@ services:
     ports:
       - 9082:5672
       - 6001:15672 # Management console
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: 100M
   email:
     # To connect from Thunderbird use
     # address 'username@localhost'
@@ -30,6 +48,15 @@ services:
       - 3465:3465 # SMTPS
       - 3993:3993 # IMAPS
       - 3995:3995 # POP3S
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 50M
   keycloak:
     image: jboss/keycloak:6.0.1
     depends_on:
@@ -42,6 +69,15 @@ services:
       POSTGRES_DATABASE: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: 50M
   # Why doesn't keycloak 4 like mysql?
   # Now upgraded to keycloak 6, can recheck
   postgres:
@@ -50,10 +86,27 @@ services:
       POSTGRES_DATABASE: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 50M
   etcd:
     image: gcr.io/etcd-development/etcd:v3.4.1
     ports:
       - 2379:2379
       - 2380:2380
     command: /usr/local/bin/etcd --name s1 --data-dir /etcd-data --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 --initial-cluster s1=http://0.0.0.0:2380 --initial-cluster-token tkn --initial-cluster-state new --log-level info --logger zap --log-outputs stderr
-
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 50M
