@@ -58,30 +58,30 @@ services:
           cpus: '0.05'
           memory: 50M
   keycloak:
-    image: jboss/keycloak:6.0.1
+    #  -v /tmp/example-realm.json:/tmp/example-realm.json
+    image: jboss/keycloak:8.0.1
     depends_on:
       - postgres
     ports:
       - 9083:8080
     environment:
+      DB_ADDR: postgres
+      DB_PORT: '5432'
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: nimda
-      POSTGRES_DATABASE: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: password
+      KEYCLOAK_IMPORT: /tmp/evelyn-services-realm.json
+    volumes:
+      - ./config/evelyn-services-realm.json:/tmp/evelyn-services-realm.json
     deploy:
       restart_policy:
         condition: on-failure
         delay: 5s
         max_attempts: 3
-      resources:
-        limits:
-          cpus: '0.15'
-          memory: 50M
-  # Why doesn't keycloak 4 like mysql?
-  # Now upgraded to keycloak 6, can recheck
   postgres:
-    image: postgres:9.6
+    image: postgres:12.1
     environment:
       POSTGRES_DATABASE: keycloak
       POSTGRES_USER: keycloak
