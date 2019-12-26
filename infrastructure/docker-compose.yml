@@ -13,9 +13,6 @@ services:
         limits:
           cpus: '0.15'
           memory: 100M
-    # Doesn't work on Windows
-    #volumes:
-    #  - ./data/db:/data/db
   rabbitmq:
     image: rabbitmq:3.7-management
     ports:
