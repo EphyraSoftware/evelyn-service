@@ -4,6 +4,7 @@ import org.evelyn.services.task.api.ITaskService;
 import org.evelyn.services.task.api.model.CreateTaskRequest;
 import org.evelyn.services.task.api.model.Task;
 import org.evelyn.services.task.data.mongo.TaskRepository;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EnableMongoRepositories(basePackages = "org.evelyn.services.task.data.mongo")
 public class EvelynTaskService implements ITaskService {
     private final ProfileServiceClient profileServiceClient;
 

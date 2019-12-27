@@ -30,5 +30,5 @@ dependencies {
     implementation 'org.evelyn.service:email-service:dev-local'
     implementation 'org.evelyn.service:group-service-rest-api:dev-local'
     implementation 'org.evelyn.service:profile-service-rest-api:dev-local'
-    implementation 'org.evelyn.service:group-service-rest-api:dev-local'
+    implementation 'org.evelyn.service:task-service-rest-api:dev-local'
 }
