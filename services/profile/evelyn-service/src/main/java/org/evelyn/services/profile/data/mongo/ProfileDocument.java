@@ -8,6 +8,8 @@ public class ProfileDocument {
     @Id
     public String id;
 
+    public Long lastLogin;
+
     public String principalName;
     public String nickname;
 }

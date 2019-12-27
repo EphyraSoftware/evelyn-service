@@ -3,23 +3,26 @@ package org.evelyn.services.profile.data.mongo;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "org.evelyn.services.profile.data.mongo")
-public class MongoUserConfig extends AbstractMongoClientConfiguration {
+public class MongoUserConfig {
     @Value("${org.evelyn.profile.mongo-connection-string}")
     private String connectionString;
 
-    @Override
     protected String getDatabaseName() {
         return "evelyn";
     }
 
-    @Override
+    @Bean
     public MongoClient mongoClient() {
         return MongoClients.create(connectionString);
+    }
+
+    @Bean
+    public MongoTemplate createMongoTemplate() {
+        return new MongoTemplate(mongoClient(), getDatabaseName());
     }
 }
