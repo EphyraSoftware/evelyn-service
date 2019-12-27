@@ -1,6 +1,12 @@
 spring:
   rabbitmq:
     port: 9082
+  servlet:
+    multipart:
+      max-file-size: 128KB
+      max-request-size: 128KB
+      enabled: true
+      location: ${java.io.tmpdir}
 
 org:
   evelyn:
@@ -27,6 +33,8 @@ org:
     task:
       mongo-connection-string: mongodb://localhost:9081
       profile-service-url: http://localhost:8080
+    calendar:
+      mongo-connection-string: mongodb://localhost:9081
 
 keycloak:
   auth-server-url: http://localhost:9083/auth

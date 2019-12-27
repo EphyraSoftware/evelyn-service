@@ -28,6 +28,8 @@ spec:
               value: "evelyn-group-service.evelyn-services:8080"
             - name: TASK_SERVICE_HOST
               value: "evelyn-task-service.evelyn-services.svc.cluster.local:8080"
+            - name: CALENDAR_SERVICE_HOST
+              value: "evelyn-calendar-service.evelyn-services.svc.cluster.local:8080"
             - name: ROOT_LOG_LEVEL
               value: debug
           ports:

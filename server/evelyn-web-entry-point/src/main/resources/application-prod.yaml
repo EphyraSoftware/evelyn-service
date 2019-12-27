@@ -10,6 +10,9 @@ zuul:
     task:
       path: /tasks/**
       url: https://${TASK_SERVICE_HOST}/tasks
+    calendar:
+      path: /calendars/**
+      url: https://${CALENDAR_SERVICE_HOST}/calendars
 
 server:
   port: 5000

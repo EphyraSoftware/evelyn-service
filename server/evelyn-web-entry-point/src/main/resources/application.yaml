@@ -9,6 +9,9 @@ zuul:
     task:
       path: /tasks/**
       url: http://localhost:8083/tasks
+    calendar:
+      path: /calendars/**
+      url: http://localhost:8084/calendars
 
 server:
   port: 5000
