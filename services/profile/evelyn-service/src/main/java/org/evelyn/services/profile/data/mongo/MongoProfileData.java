@@ -50,7 +50,7 @@ public class MongoProfileData implements ProfileDataService {
 
     @Override
     public ProfileDocument getProfile(String profileId, String principalName) {
-        return mongoTemplate.findOne(query(where("profileId").is(profileId).and("principalName").is(principalName)), ProfileDocument.class);
+        return mongoTemplate.findOne(query(where("_id").is(profileId).and("principalName").is(principalName)), ProfileDocument.class);
     }
 
     @Override
