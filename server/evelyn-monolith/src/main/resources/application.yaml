@@ -20,10 +20,13 @@ org:
           mail.debug: true
     group:
       mongo-connection-string: mongodb://localhost:9081
-      profile-service-url: http://localhost:8081
+      profile-service-url: http://localhost:8080
     profile:
       mongo-connection-string: mongodb://localhost:9081
       email-input-queue-name: send-mail
+    task:
+      mongo-connection-string: mongodb://localhost:9081
+      profile-service-url: http://localhost:8080
 
 keycloak:
   auth-server-url: http://localhost:9083/auth

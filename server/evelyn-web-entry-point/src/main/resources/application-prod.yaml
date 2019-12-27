@@ -7,6 +7,9 @@ zuul:
     group:
       path: /groups/**
       url: https://${GROUP_SERVICE_HOST}/groups
+    task:
+      path: /tasks/**
+      url: https://${TASK_SERVICE_HOST}/tasks
 
 server:
   port: 5000
