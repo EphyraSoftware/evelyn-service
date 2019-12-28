@@ -6,13 +6,12 @@ import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
-import org.evelyn.services.calendar.impl.model.ICalendarItem;
+import org.evelyn.services.calendar.impl.model.EvelynCalendar;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,9 +30,18 @@ public class ICal4jToEvelynMapperTest {
     assertNotNull(inputStream);
 
     Calendar calendar = new CalendarBuilder().build(inputStream);
-    List<ICalendarItem> toModel = ICal4jToEvelynMapper.map(calendar);
+    EvelynCalendar evelynCalendar = ICal4jToEvelynMapper.map(calendar);
 
-    Calendar fromModel = EvelynToICal4jMapper.map(toModel);
+    Calendar fromModel = EvelynToICal4jMapper.map(evelynCalendar);
+
+    assertCalendarsMatch(calendar, fromModel);
+  }
+
+  private void assertCalendarsMatch(Calendar calendar, Calendar fromModel) {
+    assertEquals(calendar.getProductId(), fromModel.getProductId());
+    assertEquals(calendar.getMethod(), fromModel.getMethod());
+    assertEquals(calendar.getCalendarScale(), fromModel.getCalendarScale());
+    assertEquals(calendar.getVersion(), fromModel.getVersion());
 
     calendar.getComponents().forEach(calendarComponent -> {
       CalendarComponent fromModelComponent = fromModel.getComponent(calendarComponent.getName());

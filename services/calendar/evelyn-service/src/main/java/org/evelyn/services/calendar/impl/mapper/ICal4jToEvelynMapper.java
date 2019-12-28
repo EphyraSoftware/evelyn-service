@@ -2,9 +2,10 @@ package org.evelyn.services.calendar.impl.mapper;
 
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.component.CalendarComponent;
+import org.evelyn.services.calendar.impl.model.EvelynCalendar;
+import org.evelyn.services.calendar.impl.model.ExchangeMeta;
 import org.evelyn.services.calendar.impl.model.ICalendarItem;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -15,12 +16,28 @@ public class ICal4jToEvelynMapper {
           "VEVENT", new VEventToEvelynMapper()
   );
 
-  public static List<ICalendarItem> map(Calendar calendar) {
-    return calendar.getComponents()
+  public static EvelynCalendar map(Calendar calendar) {
+    var evelynCalendar = new EvelynCalendar();
+
+    ExchangeMeta exchangeMeta = new ExchangeMeta();
+    evelynCalendar.setExchangeMeta(exchangeMeta);
+    exchangeMeta.setProductId(calendar.getProductId().getValue());
+    if (calendar.getMethod() != null) {
+      exchangeMeta.setMethod(calendar.getMethod().getValue());
+    }
+    if (calendar.getCalendarScale() != null) {
+      exchangeMeta.setCalendarScale(calendar.getCalendarScale().getValue());
+    }
+    exchangeMeta.setMaxVersion(calendar.getVersion().getMaxVersion());
+    exchangeMeta.setMinVersion(calendar.getVersion().getMinVersion());
+
+    evelynCalendar.setCalendarItems(calendar.getComponents()
             .stream()
             .map(ICal4jToEvelynMapper::mapComponent)
             .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
+
+    return evelynCalendar;
   }
 
   private static ICalendarItem mapComponent(CalendarComponent calendarComponent) {

@@ -6,6 +6,7 @@ import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.TextList;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.Categories;
 import net.fortuna.ical4j.model.property.Clazz;
 import net.fortuna.ical4j.model.property.Created;
@@ -15,23 +16,34 @@ import net.fortuna.ical4j.model.property.DtStamp;
 import net.fortuna.ical4j.model.property.DtStart;
 import net.fortuna.ical4j.model.property.LastModified;
 import net.fortuna.ical4j.model.property.Location;
+import net.fortuna.ical4j.model.property.Method;
+import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.RRule;
 import net.fortuna.ical4j.model.property.Sequence;
 import net.fortuna.ical4j.model.property.Status;
 import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Transp;
 import net.fortuna.ical4j.model.property.Uid;
+import net.fortuna.ical4j.model.property.Version;
 import org.evelyn.services.calendar.impl.model.CalendarEvent;
-import org.evelyn.services.calendar.impl.model.ICalendarItem;
+import org.evelyn.services.calendar.impl.model.EvelynCalendar;
 
 import java.text.ParseException;
-import java.util.List;
 
 public class EvelynToICal4jMapper {
-  public static Calendar map(List<ICalendarItem> calendarItems) {
+  public static Calendar map(EvelynCalendar evelynCalendar) {
     Calendar calendar = new Calendar();
 
-    calendarItems.forEach(calendarItem -> {
+    calendar.getProperties().add(new ProdId(evelynCalendar.getExchangeMeta().getProductId()));
+    if (evelynCalendar.getExchangeMeta().getMethod() != null) {
+      calendar.getProperties().add(new Method(evelynCalendar.getExchangeMeta().getMethod()));
+    }
+    if (evelynCalendar.getExchangeMeta().getCalendarScale() != null) {
+      calendar.getProperties().add(new CalScale(evelynCalendar.getExchangeMeta().getCalendarScale()));
+    }
+    calendar.getProperties().add(new Version(evelynCalendar.getExchangeMeta().getMinVersion(), evelynCalendar.getExchangeMeta().getMaxVersion()));
+
+    evelynCalendar.getCalendarItems().forEach(calendarItem -> {
       if (calendarItem instanceof CalendarEvent) {
         CalendarEvent calendarEvent = (CalendarEvent) calendarItem;
 

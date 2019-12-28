@@ -21,7 +21,8 @@ public class EvelynCalendarService implements CalendarService {
       Calendar calendar = new CalendarBuilder().build(calendarFile);
       // calendar.validate();
 
-      List<ICalendarItem> result = ICal4jToEvelynMapper.map(calendar);
+      var evelynCalendar = ICal4jToEvelynMapper.map(calendar);
+      List<ICalendarItem> result = evelynCalendar.getCalendarItems();
       CalendarEvent calendarEvent = (CalendarEvent) result.get(0);
 
       java.util.Calendar cal = java.util.Calendar.getInstance();
