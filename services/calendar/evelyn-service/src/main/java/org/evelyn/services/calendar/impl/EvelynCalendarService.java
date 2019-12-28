@@ -6,6 +6,7 @@ import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.property.Version;
 import org.apache.commons.lang3.StringUtils;
 import org.evelyn.services.calendar.api.CalendarService;
+import org.evelyn.services.calendar.data.api.CalendarData;
 import org.evelyn.services.calendar.impl.mapper.ICal4jToEvelynMapper;
 import org.evelyn.services.calendar.impl.model.ExchangeMeta;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,12 @@ import java.io.InputStream;
 
 @Service
 public class EvelynCalendarService implements CalendarService {
+  private final CalendarData calendarData;
+
+  public EvelynCalendarService(CalendarData calendarData) {
+    this.calendarData = calendarData;
+  }
+
   @Override
   public void importFile(String name, InputStream calendarFile) {
     try {
@@ -24,7 +31,7 @@ public class EvelynCalendarService implements CalendarService {
 
       validateExchangeMeta(evelynCalendar.getExchangeMeta());
 
-      System.out.println("Import ready");
+      calendarData.saveCalendar(evelynCalendar);
     } catch (IOException | ParserException e) {
       e.printStackTrace();
     }
