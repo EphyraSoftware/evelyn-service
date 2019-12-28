@@ -69,9 +69,6 @@ project(':rest-api') {
 
         // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
         compileOnly group: 'org.springframework', name: 'spring-webmvc', version: "${springFrameworkVersion}"
-
-        // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
-        // compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
     }
 
     publishing {
