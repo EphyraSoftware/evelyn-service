@@ -28,8 +28,7 @@ public class ICal4jToEvelynMapper {
     if (calendar.getCalendarScale() != null) {
       exchangeMeta.setCalendarScale(calendar.getCalendarScale().getValue());
     }
-    exchangeMeta.setMaxVersion(calendar.getVersion().getMaxVersion());
-    exchangeMeta.setMinVersion(calendar.getVersion().getMinVersion());
+    exchangeMeta.setVersion(calendar.getVersion().getValue());
 
     evelynCalendar.setCalendarItems(calendar.getComponents()
             .stream()

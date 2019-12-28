@@ -3,6 +3,7 @@ package org.evelyn.services.calendar.impl.mapper;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.ParameterList;
 import net.fortuna.ical4j.model.TextList;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
@@ -41,7 +42,7 @@ public class EvelynToICal4jMapper {
     if (evelynCalendar.getExchangeMeta().getCalendarScale() != null) {
       calendar.getProperties().add(new CalScale(evelynCalendar.getExchangeMeta().getCalendarScale()));
     }
-    calendar.getProperties().add(new Version(evelynCalendar.getExchangeMeta().getMinVersion(), evelynCalendar.getExchangeMeta().getMaxVersion()));
+    calendar.getProperties().add(new Version(new ParameterList(), evelynCalendar.getExchangeMeta().getVersion()));
 
     evelynCalendar.getCalendarItems().forEach(calendarItem -> {
       if (calendarItem instanceof CalendarEvent) {

@@ -7,6 +7,5 @@ public class ExchangeMeta {
   private String productId;
   private String method;
   private String calendarScale;
-  private String maxVersion;
-  private String minVersion;
+  private String version;
 }
