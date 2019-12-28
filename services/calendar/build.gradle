@@ -23,6 +23,7 @@ project.version = '0.1.0'
 ext {
     springFrameworkVersion = '5.2.1.RELEASE'
     springBootVersion = '2.2.0.RELEASE'
+    keycloakSpringVersion = '4.0.0.Final'
     springMongoVersion = '2.2.1.RELEASE'
     springRabbitVersion = '2.2.1.RELEASE'
     lombokVersion = '1.18.10'
@@ -47,6 +48,9 @@ project(":evelyn-service") {
 
         // https://mvnrepository.com/artifact/org.springframework/spring-context-support
         implementation group: 'org.springframework', name: 'spring-context-support', version: "${springFrameworkVersion}"
+
+        // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
+        implementation group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
 
         // https://mvnrepository.com/artifact/org.mnode.ical4j/ical4j
         implementation group: 'org.mnode.ical4j', name: 'ical4j', version: '3.0.11'

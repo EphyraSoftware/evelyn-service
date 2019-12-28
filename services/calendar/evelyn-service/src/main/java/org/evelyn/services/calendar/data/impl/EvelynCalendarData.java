@@ -2,6 +2,7 @@ package org.evelyn.services.calendar.data.impl;
 
 import org.evelyn.services.calendar.data.api.CalendarData;
 import org.evelyn.services.calendar.data.api.model.CalendarItem;
+import org.evelyn.services.calendar.impl.client.ProfileModel;
 import org.evelyn.services.calendar.impl.model.CalendarEvent;
 import org.evelyn.services.calendar.impl.model.EvelynCalendar;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -20,9 +21,14 @@ public class EvelynCalendarData implements CalendarData {
   }
 
   @Override
-  public void saveCalendar(EvelynCalendar evelynCalendar) {
+  public void saveCalendar(ProfileModel profile, EvelynCalendar evelynCalendar) {
     List<CalendarItem> calendarItems = toPersistenceModel(evelynCalendar);
-    calendarItems.forEach(mongoTemplate::insert);
+
+    calendarItems.forEach(calendarItem -> {
+      calendarItem.profileId = profile.getProfileId();
+
+      mongoTemplate.insert(calendarItem);
+    });
   }
 
   private List<CalendarItem> toPersistenceModel(EvelynCalendar evelynCalendar) {

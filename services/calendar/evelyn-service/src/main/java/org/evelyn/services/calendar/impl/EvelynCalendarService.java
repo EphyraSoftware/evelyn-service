@@ -7,8 +7,11 @@ import net.fortuna.ical4j.model.property.Version;
 import org.apache.commons.lang3.StringUtils;
 import org.evelyn.services.calendar.api.CalendarService;
 import org.evelyn.services.calendar.data.api.CalendarData;
+import org.evelyn.services.calendar.impl.client.ProfileModel;
+import org.evelyn.services.calendar.impl.client.ProfileServiceClient;
 import org.evelyn.services.calendar.impl.mapper.ICal4jToEvelynMapper;
 import org.evelyn.services.calendar.impl.model.ExchangeMeta;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,13 +20,22 @@ import java.io.InputStream;
 @Service
 public class EvelynCalendarService implements CalendarService {
   private final CalendarData calendarData;
+  private final ProfileServiceClient profileServiceClient;
 
-  public EvelynCalendarService(CalendarData calendarData) {
+  public EvelynCalendarService(CalendarData calendarData, ProfileServiceClient profileServiceClient) {
     this.calendarData = calendarData;
+    this.profileServiceClient = profileServiceClient;
   }
 
   @Override
   public void importFile(String name, InputStream calendarFile) {
+    ResponseEntity<ProfileModel> currentProfileResponse = profileServiceClient.getCurrentProfile();
+    if (currentProfileResponse.getBody() == null) {
+      throw new RuntimeException("Unable to get profile.");
+    }
+
+    var profile = currentProfileResponse.getBody();
+
     try {
       Calendar calendar = new CalendarBuilder().build(calendarFile);
 
@@ -31,7 +43,7 @@ public class EvelynCalendarService implements CalendarService {
 
       validateExchangeMeta(evelynCalendar.getExchangeMeta());
 
-      calendarData.saveCalendar(evelynCalendar);
+      calendarData.saveCalendar(profile, evelynCalendar);
     } catch (IOException | ParserException e) {
       e.printStackTrace();
     }

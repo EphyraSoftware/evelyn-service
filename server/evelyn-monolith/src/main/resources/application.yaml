@@ -35,6 +35,7 @@ org:
       profile-service-url: http://localhost:8080
     calendar:
       mongo-connection-string: mongodb://localhost:9081
+      profile-service-url: http://localhost:8080
 
 keycloak:
   auth-server-url: http://localhost:9083/auth

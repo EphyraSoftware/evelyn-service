@@ -15,6 +15,8 @@ public class CalendarItem {
   @Id
   public String id;
 
+  public String profileId;
+
   public String description;
   public LocalDateTime startDate;
   public EventClass eventClass;
