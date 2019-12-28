@@ -56,6 +56,15 @@ project(":evelyn-service") {
 
         // https://mvnrepository.com/artifact/com.hazelcast/hazelcast
         runtime group: 'com.hazelcast', name: 'hazelcast', version: '3.12.5'
+
+        testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
     }
 }
 

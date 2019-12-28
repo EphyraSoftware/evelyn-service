@@ -5,9 +5,11 @@ import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
+import net.fortuna.ical4j.model.property.Categories;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.evelyn.services.calendar.impl.model.CalendarEvent;
+import org.evelyn.services.calendar.impl.model.EventClass;
 import org.evelyn.services.calendar.impl.model.EventStatus;
 import org.evelyn.services.calendar.impl.model.ICalendarItem;
 import org.evelyn.services.calendar.impl.model.Transparency;
@@ -32,9 +34,18 @@ class VEventToEvelynMapper implements Function<CalendarComponent, ICalendarItem>
               return;
             }
 
-            Date date = extractDate(propertyCalendarEventPair.getLeft(), value);
+            Pair<Date, Boolean> dateBooleanPair = extractDate(propertyCalendarEventPair.getLeft(), value);
 
-            propertyCalendarEventPair.getRight().setStartDate(date);
+            propertyCalendarEventPair.getRight().setStartDate(dateBooleanPair.getLeft());
+            propertyCalendarEventPair.getRight().setStartDateHasTimeComponent(dateBooleanPair.getRight());
+          }),
+          Map.entry("CLASS", (Pair<Property, CalendarEvent> propertyCalendarEventPair) -> {
+            String value = propertyCalendarEventPair.getLeft().getValue();
+            if (StringUtils.isEmpty(value)) {
+              return;
+            }
+
+            propertyCalendarEventPair.getRight().setEventClass(EventClass.fromString(value));
           }),
           Map.entry("CREATED", (Pair<Property, CalendarEvent> propertyCalendarEventPair) -> {
             String value = propertyCalendarEventPair.getLeft().getValue();
@@ -42,9 +53,9 @@ class VEventToEvelynMapper implements Function<CalendarComponent, ICalendarItem>
               return;
             }
 
-            Date date = extractDate(propertyCalendarEventPair.getLeft(), value);
+            Pair<Date, Boolean> dateBooleanPair = extractDate(propertyCalendarEventPair.getLeft(), value);
 
-            propertyCalendarEventPair.getRight().setCreated(date);
+            propertyCalendarEventPair.getRight().setCreated(dateBooleanPair.getLeft());
           }),
           Map.entry("DESCRIPTION", (Pair<Property, CalendarEvent> propertyCalendarEventPair) -> {
             String value = propertyCalendarEventPair.getLeft().getValue();
@@ -60,9 +71,10 @@ class VEventToEvelynMapper implements Function<CalendarComponent, ICalendarItem>
               return;
             }
 
-            Date date = extractDate(propertyCalendarEventPair.getLeft(), value);
+            Pair<Date, Boolean> dateBooleanPair = extractDate(propertyCalendarEventPair.getLeft(), value);
 
-            propertyCalendarEventPair.getRight().setLastModified(date);
+            propertyCalendarEventPair.getRight().setLastModified(dateBooleanPair.getLeft());
+            propertyCalendarEventPair.getRight().setLastModifiedHasTimeComponent(dateBooleanPair.getRight());
           }),
           Map.entry("LOCATION", (Pair<Property, CalendarEvent> propertyCalendarEventPair) -> {
             String value = propertyCalendarEventPair.getLeft().getValue();
@@ -105,21 +117,41 @@ class VEventToEvelynMapper implements Function<CalendarComponent, ICalendarItem>
 
             propertyCalendarEventPair.getRight().setTransparency(Transparency.fromString(value));
           }),
+          Map.entry("RRULE", (Pair<Property, CalendarEvent> propertyCalendarEventPair) -> {
+            String value = propertyCalendarEventPair.getLeft().getValue();
+            if (StringUtils.isEmpty(value)) {
+              return;
+            }
+
+            propertyCalendarEventPair.getRight().setRRule(value);
+          }),
           Map.entry("DTEND", (Pair<Property, CalendarEvent> propertyCalendarEventPair) -> {
             String value = propertyCalendarEventPair.getLeft().getValue();
             if (StringUtils.isEmpty(value)) {
               return;
             }
 
-            Date date = extractDate(propertyCalendarEventPair.getLeft(), value);
+            Pair<Date, Boolean> dateBooleanPair = extractDate(propertyCalendarEventPair.getLeft(), value);
 
-            propertyCalendarEventPair.getRight().setEndDate(date);
+            propertyCalendarEventPair.getRight().setEndDate(dateBooleanPair.getLeft());
+            propertyCalendarEventPair.getRight().setEndDateHasTimeComponent(dateBooleanPair.getRight());
+          }),
+          Map.entry("CATEGORIES", (Pair<Property, CalendarEvent> propertyCalendarEventPair) -> {
+            String value = propertyCalendarEventPair.getLeft().getValue();
+            if (StringUtils.isEmpty(value)) {
+              return;
+            }
+
+            new Categories(value).getCategories().iterator().forEachRemaining(
+                    s -> propertyCalendarEventPair.getRight().getCategories().add(s)
+            );
           })
   );
 
-  private static Date extractDate(Property property, String value) {
+  private static Pair<Date, Boolean> extractDate(Property property, String value) {
     Parameter valueType = property.getParameter("VALUE");
     Date date = null;
+    boolean hasTimeComponent = false;
     if (valueType != null && !StringUtils.isEmpty(valueType.getValue()) && "DATE".equals(valueType.getValue())) {
       try {
         date = new Date(value);
@@ -131,12 +163,13 @@ class VEventToEvelynMapper implements Function<CalendarComponent, ICalendarItem>
         // TODO Look at using modern date handling.
         // LocalDate date = LocalDate.parse(value, DateTimeFormatter.BASIC_ISO_DATE);
         date = new DateTime(value);
+        hasTimeComponent = true;
       } catch (ParseException e) {
         e.printStackTrace();
       }
     }
 
-    return date;
+    return Pair.of(date, hasTimeComponent);
   }
 
   @Override

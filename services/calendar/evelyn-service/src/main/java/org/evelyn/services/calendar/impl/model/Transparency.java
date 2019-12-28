@@ -11,9 +11,9 @@ public enum Transparency {
   }
 
   public static Transparency fromString(String name) {
-    for (Transparency eventStatus : Transparency.values()) {
-      if (eventStatus.name.equalsIgnoreCase(name)) {
-        return eventStatus;
+    for (Transparency transparency : Transparency.values()) {
+      if (transparency.name.equalsIgnoreCase(name)) {
+        return transparency;
       }
     }
     return null;
