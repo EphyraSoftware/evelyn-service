@@ -16,6 +16,7 @@ public class CalendarItem {
   public String id;
 
   public String profileId;
+  public String itemType;
 
   public String description;
   public LocalDateTime startDate;

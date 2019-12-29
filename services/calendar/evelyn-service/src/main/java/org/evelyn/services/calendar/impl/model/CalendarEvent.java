@@ -10,6 +10,8 @@ import java.util.Map;
 
 @Data
 public class CalendarEvent implements ICalendarItem {
+  public static final String TYPE = "EVENT";
+
   private String description;
   private String id;
   private Date startDate;
@@ -33,5 +35,10 @@ public class CalendarEvent implements ICalendarItem {
 
   public void addUnknownProperty(String name, String value) {
     this.unknownProperties.put(name, value);
+  }
+
+  @Override
+  public String getType() {
+    return TYPE;
   }
 }

@@ -10,12 +10,15 @@ import org.evelyn.services.calendar.data.api.CalendarData;
 import org.evelyn.services.calendar.impl.client.ProfileModel;
 import org.evelyn.services.calendar.impl.client.ProfileServiceClient;
 import org.evelyn.services.calendar.impl.mapper.ICal4jToEvelynMapper;
+import org.evelyn.services.calendar.impl.model.CalendarEvent;
 import org.evelyn.services.calendar.impl.model.ExchangeMeta;
+import org.evelyn.services.calendar.impl.model.ICalendarItem;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class EvelynCalendarService implements CalendarService {
@@ -29,12 +32,7 @@ public class EvelynCalendarService implements CalendarService {
 
   @Override
   public void importFile(String name, InputStream calendarFile) {
-    ResponseEntity<ProfileModel> currentProfileResponse = profileServiceClient.getCurrentProfile();
-    if (currentProfileResponse.getBody() == null) {
-      throw new RuntimeException("Unable to get profile.");
-    }
-
-    var profile = currentProfileResponse.getBody();
+    ProfileModel profile = getProfileModel();
 
     try {
       Calendar calendar = new CalendarBuilder().build(calendarFile);
@@ -47,6 +45,11 @@ public class EvelynCalendarService implements CalendarService {
     } catch (IOException | ParserException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public List<ICalendarItem> getEvents(String name) {
+    return calendarData.getEvents(getProfileModel(), CalendarEvent.TYPE);
   }
 
   private void validateExchangeMeta(ExchangeMeta exchangeMeta) {
@@ -65,5 +68,14 @@ public class EvelynCalendarService implements CalendarService {
     if (!Version.VERSION_2_0.getValue().equals(exchangeMeta.getVersion())) {
       throw new RuntimeException("Only version 2.0 is supported");
     }
+  }
+
+  private ProfileModel getProfileModel() {
+    ResponseEntity<ProfileModel> currentProfileResponse = profileServiceClient.getCurrentProfile();
+    if (currentProfileResponse.getBody() == null) {
+      throw new RuntimeException("Unable to get profile.");
+    }
+
+    return currentProfileResponse.getBody();
   }
 }
