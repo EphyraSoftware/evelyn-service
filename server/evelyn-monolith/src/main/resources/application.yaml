@@ -1,6 +1,7 @@
 spring:
   rabbitmq:
     port: 9082
+    virtual-host: evelyn_vhost
   servlet:
     multipart:
       max-file-size: 128KB
