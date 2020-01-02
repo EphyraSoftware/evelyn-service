@@ -2,11 +2,12 @@ package org.evelyn.services.calendar.impl.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class EvelynCalendar {
   private ExchangeMeta exchangeMeta;
 
-  private List<ICalendarItem> calendarItems;
+  private List<ICalendarItem> calendarItems = new ArrayList<>();
 }

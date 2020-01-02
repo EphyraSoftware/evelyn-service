@@ -9,4 +9,6 @@ public interface CalendarService {
   void importFile(String name, InputStream calendarFile);
 
   List<ICalendarItem> getEvents(String name);
+
+  ICalendarItem createEvent(CreateEventModel createEventModel);
 }
