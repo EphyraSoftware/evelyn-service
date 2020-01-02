@@ -12,6 +12,7 @@ spring:
   rabbitmq:
     host: ${RABBITMQ_HOST}
     port: ${RABBITMQ_PORT}
+    virtual-host: evelyn_vhost
 
 org:
   evelyn:
