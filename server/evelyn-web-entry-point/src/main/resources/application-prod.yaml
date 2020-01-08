@@ -7,12 +7,15 @@ zuul:
     group:
       path: /groups/**
       url: https://${GROUP_SERVICE_HOST}/groups
+      sensitiveHeaders: Cookie,Set-Cookie
     task:
       path: /tasks/**
       url: https://${TASK_SERVICE_HOST}/tasks
+      sensitiveHeaders: Cookie,Set-Cookie
     calendar:
       path: /calendars/**
       url: https://${CALENDAR_SERVICE_HOST}/calendars
+      sensitiveHeaders: Cookie,Set-Cookie
 
 server:
   port: 5000
