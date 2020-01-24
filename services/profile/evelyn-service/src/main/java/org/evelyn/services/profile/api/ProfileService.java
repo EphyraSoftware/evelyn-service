@@ -1,7 +1,7 @@
 package org.evelyn.services.profile.api;
 
 public interface ProfileService {
-  Profile getProfile(String principalName);
+  Profile getProfile(AuthenticationInfo authenticationInfo);
 
-  Profile updateProfile(String name, Profile profile);
+  Profile updateProfile(String id, Profile profile);
 }

@@ -9,6 +9,5 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 
-    implementation group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
     implementation group: 'org.evelyn.library', name: 'remote-configuration', version: "${libraryRemoteConfigurationVersion}"
 }

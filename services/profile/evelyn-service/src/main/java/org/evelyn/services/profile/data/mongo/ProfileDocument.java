@@ -10,6 +10,6 @@ public class ProfileDocument {
 
     public Long lastLogin;
 
-    public String principalName;
+    public String email;
     public String nickname;
 }

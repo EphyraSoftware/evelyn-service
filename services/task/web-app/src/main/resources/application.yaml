@@ -14,4 +14,4 @@ keycloak:
   realm: evelyn-services-realm
   public-client: true
   resource: evelyn-ui
-  principal-attribute: preferred_username
+  principal-attribute: sub

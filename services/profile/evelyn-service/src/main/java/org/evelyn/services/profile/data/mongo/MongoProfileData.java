@@ -22,14 +22,14 @@ public class MongoProfileData implements ProfileDataService {
     }
 
     @Override
-    public Profile getOrCreateProfile(String principalName) {
+    public Profile getOrCreateProfile(String id, String email) {
         Profile profile = new Profile();
 
         var profileDocument = new ProfileDocument();
-        profileDocument.principalName = principalName;
+        profileDocument.email = email;
 
-        Query query = query(where("principalName").is(principalName));
-        UpdateResult updateResult = mongoTemplate.upsert(query, Update.update("lastLogin", new Date().getTime()).setOnInsert("principalName", principalName), ProfileDocument.class);
+        Query query = query(where("_id").is(id));
+        UpdateResult updateResult = mongoTemplate.upsert(query, Update.update("lastLogin", new Date().getTime()).setOnInsert("email", email), ProfileDocument.class);
 
         if (updateResult.getMatchedCount() == 0) {
             profile.setNewRegistration(true);
@@ -43,14 +43,14 @@ public class MongoProfileData implements ProfileDataService {
         // Map profile fields here.
         profile.setProfileId(profileDocument.id);
         profile.setNickname(profileDocument.nickname);
-        profile.setEmail(principalName);
+        profile.setEmail(profileDocument.email);
 
         return profile;
     }
 
     @Override
-    public ProfileDocument getProfile(String profileId, String principalName) {
-        return mongoTemplate.findOne(query(where("_id").is(profileId).and("principalName").is(principalName)), ProfileDocument.class);
+    public ProfileDocument getProfile(String profileId) {
+        return mongoTemplate.findOne(query(where("_id").is(profileId)), ProfileDocument.class);
     }
 
     @Override

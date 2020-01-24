@@ -1,6 +1,7 @@
 package org.evelyn.services.profile.impl;
 
 import freemarker.template.TemplateException;
+import org.evelyn.services.profile.api.AuthenticationInfo;
 import org.evelyn.services.profile.api.Profile;
 import org.evelyn.services.profile.api.ProfileService;
 import org.evelyn.services.profile.data.api.ProfileDataService;
@@ -21,25 +22,23 @@ public class EvelynProfileService implements ProfileService {
   }
 
   @Override
-  public Profile getProfile(String principalName) {
-      Profile profile = profileDataService.getOrCreateProfile(principalName);
+  public Profile getProfile(AuthenticationInfo authenticationInfo) {
+    Profile profile = profileDataService.getOrCreateProfile(authenticationInfo.getSubject(), authenticationInfo.getEmail());
 
-      if (profile.getNewRegistration()) {
-        try {
-          registrationMailSender.sendRegistrationMessage(profile);
-        } catch (IOException e) {
-          e.printStackTrace();
-        } catch (TemplateException e) {
-          e.printStackTrace();
-        }
+    if (profile.getNewRegistration()) {
+      try {
+        registrationMailSender.sendRegistrationMessage(profile);
+      } catch (IOException | TemplateException e) {
+        e.printStackTrace();
       }
+    }
 
-      return profile;
+    return profile;
   }
 
   @Override
-  public Profile updateProfile(String name, Profile profile) {
-    ProfileDocument profileDocument = profileDataService.getProfile(profile.getProfileId(), name);
+  public Profile updateProfile(String id, Profile profile) {
+    ProfileDocument profileDocument = profileDataService.getProfile(id);
 
     profileDocument.nickname = profile.getNickname();
 
