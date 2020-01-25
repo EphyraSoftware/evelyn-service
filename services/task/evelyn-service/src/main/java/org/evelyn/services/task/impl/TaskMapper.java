@@ -13,6 +13,8 @@ public class TaskMapper {
         taskModel.profileId = task.getProfileId();
         taskModel.title = task.getTitle();
         taskModel.description = task.getDescription();
+        taskModel.completed = task.isCompleted();
+        taskModel.createdDateTime = task.getCreatedDateTime();
 
         return taskModel;
     }
@@ -25,6 +27,8 @@ public class TaskMapper {
 
         task.setTitle(taskModel.title);
         task.setDescription(taskModel.description);
+        task.setCompleted(taskModel.completed);
+        task.setCreatedDateTime(taskModel.createdDateTime);
 
         return task;
     }

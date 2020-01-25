@@ -5,57 +5,43 @@ import org.evelyn.services.task.api.model.CreateTaskRequest;
 import org.evelyn.services.task.api.model.Task;
 import org.evelyn.services.task.data.mongo.TaskRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @EnableMongoRepositories(basePackages = "org.evelyn.services.task.data.mongo")
 public class EvelynTaskService implements ITaskService {
-    private final ProfileServiceClient profileServiceClient;
 
     private final TaskRepository taskRepository;
 
-    public EvelynTaskService(ProfileServiceClient profileServiceClient, TaskRepository taskRepository) {
-        this.profileServiceClient = profileServiceClient;
-        this.taskRepository = taskRepository;
-    }
+  public EvelynTaskService(TaskRepository taskRepository) {
+    this.taskRepository = taskRepository;
+  }
 
-    @Override
-    public Task createTask(String name, CreateTaskRequest createTaskRequest) {
-        ResponseEntity<ProfileModel> profile = profileServiceClient.getCurrentProfile();
-        if (profile.getBody() == null) {
-            throw new RuntimeException("Failed to get profile");
-        }
+  @Override
+  public Task createTask(String profileId, CreateTaskRequest createTaskRequest) {
+    var task = new Task();
+    task.setProfileId(profileId);
+    task.setTitle(createTaskRequest.getTitle());
+    task.setDescription(createTaskRequest.getDescription());
+    task.setCompleted(false);
+    task.setCreatedDateTime(LocalDateTime.now());
 
-        String profileId = profile.getBody().getProfileId();
+    var taskModel = TaskMapper.toTaskModel(task);
 
-        var task = new Task();
-        task.setProfileId(profileId);
-        task.setTitle(createTaskRequest.getTitle());
-        task.setDescription(createTaskRequest.getDescription());
+    taskRepository.save(taskModel);
 
-        var taskModel = TaskMapper.toTaskModel(task);
+    return TaskMapper.toTask(taskModel);
+  }
 
-        taskRepository.save(taskModel);
-
-        return TaskMapper.toTask(taskModel);
-    }
-
-    @Override
-    public List<Task> getTasks(String name) {
-        ResponseEntity<ProfileModel> profile = profileServiceClient.getCurrentProfile();
-        if (profile.getBody() == null) {
-            throw new RuntimeException("Failed to get profile");
-        }
-
-        String profileId = profile.getBody().getProfileId();
-
-        return taskRepository.findByProfileId(profileId)
-                .stream()
-                .map(TaskMapper::toTask)
-                .collect(Collectors.toList());
-    }
+  @Override
+  public List<Task> getTasks(String profileId) {
+    return taskRepository.findByProfileId(profileId)
+            .stream()
+            .map(TaskMapper::toTask)
+            .collect(Collectors.toList());
+  }
 }
