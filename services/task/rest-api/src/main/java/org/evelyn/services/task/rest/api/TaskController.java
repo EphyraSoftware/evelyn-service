@@ -5,6 +5,7 @@ import org.evelyn.services.task.api.model.CreateTaskRequest;
 import org.evelyn.services.task.api.model.Task;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,5 +46,11 @@ public class TaskController {
     public Task patchTask(final Principal principal, @PathVariable String taskId, @RequestBody String patchOperations) {
         JsonArray jsonArray = Json.createReader(new StringReader(patchOperations)).readArray();
         return taskService.patchTask(principal.getName(), taskId, Json.createPatch(jsonArray));
+    }
+
+    @DeleteMapping(value = "/tasks/{taskId}")
+    @ResponseBody
+    public void deleteTask(final Principal principal, @PathVariable String taskId) {
+        taskService.deleteTask(principal.getName(), taskId);
     }
 }

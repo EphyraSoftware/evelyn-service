@@ -12,4 +12,6 @@ public interface ITaskService {
   List<Task> getTasks(String profileId);
 
   Task patchTask(String profileId, String taskId, JsonPatch patchOperation);
+
+  void deleteTask(String profileId, String taskId);
 }

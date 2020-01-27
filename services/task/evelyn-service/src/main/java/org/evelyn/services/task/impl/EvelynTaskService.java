@@ -75,6 +75,12 @@ public class EvelynTaskService implements ITaskService {
     return patchedTask;
   }
 
+  @Override
+  public void deleteTask(String profileId, String taskId) {
+    Task task = getTask(profileId, taskId);
+    taskRepository.delete(TaskMapper.toTaskModel(task));
+  }
+
   private Task getTask(String profileId, String taskId) {
     var taskModel = taskRepository.findByProfileIdAndId(profileId, taskId);
     return TaskMapper.toTask(taskModel);
