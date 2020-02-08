@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class Todo {
+  private String id;
   private String name;
   private LocalDateTime expiry;
   private List<TodoItem> items = new ArrayList<>();

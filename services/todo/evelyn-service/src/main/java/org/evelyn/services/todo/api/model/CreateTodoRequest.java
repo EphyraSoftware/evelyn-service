@@ -10,6 +10,7 @@ import java.util.List;
 public class CreateTodoRequest {
   @NotNull
   private String name;
+
   private LocalDateTime expiry;
   private List<CreateTodoItemRequest> initialItems;
 }

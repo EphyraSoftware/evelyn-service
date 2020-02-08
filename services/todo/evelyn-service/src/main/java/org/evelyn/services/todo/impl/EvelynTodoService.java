@@ -48,11 +48,15 @@ public class EvelynTodoService implements ITodoService {
     var todo = new Todo();
     todo.setName(createTodoRequest.getName());
     todo.setExpiry(createTodoRequest.getExpiry());
-    todo.setItems(createTodoRequest.getInitialItems().stream().map(initialTodoItem -> {
-      var todoItem = new TodoItem();
-      todoItem.setText(initialTodoItem.getText());
-      return todoItem;
-    }).collect(Collectors.toList()));
+
+    if (createTodoRequest.getInitialItems() != null) {
+      todo.setItems(createTodoRequest.getInitialItems().stream().map(initialTodoItem -> {
+        var todoItem = new TodoItem();
+        todoItem.setText(initialTodoItem.getText());
+        return todoItem;
+      }).collect(Collectors.toList()));
+    }
+
     return todo;
   }
 }

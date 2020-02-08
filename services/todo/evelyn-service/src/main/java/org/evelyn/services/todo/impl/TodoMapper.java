@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class TodoMapper {
   public static TodoModel toModel(Todo todo) {
     var todoModel = new TodoModel();
+    todoModel.id = todo.getId();
     todoModel.profileId = todo.getProfileId();
     todoModel.name = todo.getName();
     todoModel.expiry = todo.getExpiry();
@@ -25,6 +26,7 @@ public class TodoMapper {
 
   public static Todo fromModel(TodoModel result) {
     var todo = new Todo();
+    todo.setId(result.id);
     todo.setProfileId(result.profileId);
     todo.setName(result.name);
     todo.setExpiry(result.expiry);

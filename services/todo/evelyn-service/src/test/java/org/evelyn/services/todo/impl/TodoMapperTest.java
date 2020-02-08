@@ -12,6 +12,7 @@ class TodoMapperTest {
   @Test
   public void roundTipTest() {
     var start = new Todo();
+    start.setId("id");
     start.setProfileId("profile-id");
     start.setName("name");
     start.setExpiry(LocalDateTime.now());
@@ -22,6 +23,7 @@ class TodoMapperTest {
 
     var result = TodoMapper.fromModel(TodoMapper.toModel(start));
 
+    assertEquals(start.getId(), result.getId());
     assertEquals(start.getProfileId(), result.getProfileId());
     assertEquals(start.getName(), result.getName());
     assertEquals(start.getExpiry(), result.getExpiry());
