@@ -1,0 +1,5 @@
+rootProject.name = 'evelyn-todo-service'
+
+include ':evelyn-service',
+        ':rest-api',
+        'web-app'

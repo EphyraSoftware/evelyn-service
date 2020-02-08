@@ -1,0 +1,15 @@
+server:
+  port: 8085
+
+org:
+  evelyn:
+    tlsEnabled: false
+    todo:
+      mongo-connection-string: mongodb://localhost:9081
+
+keycloak:
+  auth-server-url: http://localhost:9083/auth
+  realm: evelyn-services-realm
+  public-client: true
+  resource: evelyn-ui
+  principal-attribute: sub

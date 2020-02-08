@@ -1,4 +1,4 @@
-package org.evelyn.services.task.web;
+package org.evelyn.services.todo.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
