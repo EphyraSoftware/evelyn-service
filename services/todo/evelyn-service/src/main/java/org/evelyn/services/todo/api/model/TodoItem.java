@@ -1,13 +1,9 @@
 package org.evelyn.services.todo.api.model;
 
+import lombok.Data;
+
+@Data
 public class TodoItem {
   private String text;
-
-  public String getText() {
-    return text;
-  }
-
-  public void setText(String text) {
-    this.text = text;
-  }
+  private boolean complete;
 }

@@ -18,6 +18,7 @@ public class TodoMapper {
     todoModel.todoItems = todo.getItems().stream().map(todoItem -> {
       var todoItemModel = new TodoItemModel();
       todoItemModel.text = todoItem.getText();
+      todoItemModel.complete = todoItem.isComplete();
       return todoItemModel;
     }).collect(Collectors.toList());
 
@@ -34,6 +35,7 @@ public class TodoMapper {
     todo.setItems(result.todoItems.stream().map(todoItemModel -> {
       var todoItem = new TodoItem();
       todoItem.setText(todoItemModel.text);
+      todoItem.setComplete(todoItemModel.complete);
       return todoItem;
     }).collect(Collectors.toList()));
 

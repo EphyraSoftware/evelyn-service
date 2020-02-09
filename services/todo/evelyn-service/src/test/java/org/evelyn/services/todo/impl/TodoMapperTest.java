@@ -19,6 +19,7 @@ class TodoMapperTest {
 
     TodoItem startItem = new TodoItem();
     startItem.setText("text");
+    startItem.setComplete(true);
     start.getItems().add(startItem);
 
     var result = TodoMapper.fromModel(TodoMapper.toModel(start));
@@ -31,6 +32,7 @@ class TodoMapperTest {
     assertEquals(start.getItems().size(), result.getItems().size());
     for (var i = 0; i < start.getItems().size(); i++) {
       assertEquals(start.getItems().get(0).getText(), result.getItems().get(0).getText());
+      assertEquals(start.getItems().get(0).isComplete(), result.getItems().get(0).isComplete());
     }
   }
 }

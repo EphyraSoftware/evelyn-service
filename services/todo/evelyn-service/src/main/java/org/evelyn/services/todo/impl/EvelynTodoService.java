@@ -44,6 +44,19 @@ public class EvelynTodoService implements ITodoService {
     return todos.stream().map(TodoMapper::fromModel).collect(Collectors.toList());
   }
 
+  @Override
+  public void putTodoItem(String profileId, String todoId, Integer itemIndex, TodoItem todoItem) {
+    TodoModel todoModel = todoRepository.findByProfileIdAndId(profileId, todoId);
+
+    var todo = fromModel(todoModel);
+
+    TodoItem item = todo.getItems().get(itemIndex);
+    item.setText(todoItem.getText());
+    item.setComplete(todoItem.isComplete());
+
+    todoRepository.save(toModel(todo));
+  }
+
   private Todo buildTodoFromCreateRequest(CreateTodoRequest createTodoRequest) {
     var todo = new Todo();
     todo.setName(createTodoRequest.getName());
