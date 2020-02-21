@@ -7,6 +7,10 @@ include ':libraries:authentication',
 include ':server:evelyn-monolith'
 
 file('services').listFiles().each { File moduleBuild ->
+    if (moduleBuild.name == 'todo-expiry-daemon') {
+        return
+    }
+
     includeBuild moduleBuild
 }
 
