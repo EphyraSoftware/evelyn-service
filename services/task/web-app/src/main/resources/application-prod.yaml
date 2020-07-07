@@ -21,3 +21,7 @@ keycloak:
   public-client: true
   resource: evelyn-ui
   principal-attribute: sub
+
+logging:
+  level:
+    root: INFO
