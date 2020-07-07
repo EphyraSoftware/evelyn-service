@@ -4,18 +4,14 @@ subprojects {
     repositories {
         jcenter()
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
-                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
-            }
+            name = "Nexus"
+            url = uri("https://nexus.evelyn.internal:443/repository/ephyra")
         }
         mavenLocal()
     }
 
-    sourceCompatibility = 13
-    targetCompatibility = 13
+    sourceCompatibility = 14
+    targetCompatibility = 14
 }
 
 project.version = '0.1.0'
@@ -26,7 +22,7 @@ ext {
     springMongoVersion = '2.2.1.RELEASE'
     lombokVersion = '1.18.10'
 
-    libraryAuthenticationVersion = System.getenv("LIBRARY_AUTHENTICATION_VERSION") ?: 'dev-local'
+    libraryAuthenticationVersion = '0.1.0-SNAPSHOT'
 }
 
 project(":evelyn-service") {
@@ -99,85 +95,4 @@ task localPublish {
     group = 'evelyn'
     description 'Publishes the core of the service to be used by the monolith server.'
     dependsOn ':rest-api:publishToMavenLocal'
-}
-
-/*
- * ******************
- * Image packaging.
- * ******************
- */
-task deleteImageSource(type: Delete) {
-    description 'Removes the working copy of the project sources.'
-    delete 'work'
-}
-
-task copyImageSource(type: Copy) {
-    description 'Copies the project sources to be built by pack.'
-
-    dependsOn project.tasks.findByName('deleteImageSource')
-
-    from '.'
-    into 'work'
-    exclude '.gradle', 'work', 'build'
-}
-
-task buildImage(type: Exec) {
-    group = 'evelyn'
-    description 'Packages the service as a container image.'
-
-    dependsOn project.tasks.findByName('copyImageSource')
-
-    commandLine 'cmd', '/c', 'pack', 'build',
-            "${project.name}",
-            // Note that coping the .gradle directory doesn't work due to locks so project sources are copied and built
-            // from a working directory.
-            '--path', 'work',
-            '--env', 'BP_JAVA_VERSION=13.*',
-            '--env', "GPR_USER=${project.findProperty("gpr.user") ?: System.getenv("GPR_USER")}",
-            '--env', "GPR_API_KEY=${project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")}",
-            '--env', 'LIBRARY_AUTHENTICATION_VERSION=dev-3'
-}
-
-task copyWebAppBuild(type: Copy) {
-    description 'Copies the web-app build to the top level.'
-    from 'web-app/build'
-    into 'build'
-}
-
-// Pack does not understand which sub-project to collect build artefacts from, so copy the sub-project build output
-// after the build task for it completes.
-project.tasks.findByPath(':web-app:build').finalizedBy(project.tasks.findByName('copyWebAppBuild'))
-
-/*
- * ******************
- * Image publishing.
- * ******************
- */
-task gitHubDockerLogin(type: Exec) {
-    description 'Log into the GitHub\'s Docker package repository.'
-
-    commandLine 'cmd', '/c', 'docker', 'login',
-            'docker.pkg.github.com',
-            '-u', project.findProperty("gpr.user") ?: System.getenv("GPR_USER"),
-            '-p', project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
-}
-
-task gitHubDockerTag(type: Exec) {
-    description 'Tag the locally built image for this project with the GitHub Docker package repository prefix.'
-
-    dependsOn project.tasks.findByName('gitHubDockerLogin')
-
-    commandLine 'cmd', '/c', 'docker', 'tag',
-            project.name,
-            "docker.pkg.github.com/ephyrasoftware/evelyn-service/${project.name}:dev"
-}
-
-task gitHubDockerPush(type: Exec) {
-    group = 'evelyn'
-    description 'Publish a development image to the GitHub Docker package repository.'
-
-    dependsOn project.tasks.findByName('gitHubDockerTag')
-
-    commandLine 'cmd', '/c', 'docker', 'push',
-            "docker.pkg.github.com/ephyrasoftware/evelyn-service/${project.name}:dev"
 }

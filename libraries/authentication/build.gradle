@@ -12,8 +12,8 @@ ext {
     springBootVersion = '2.2.0.RELEASE'
 }
 
-sourceCompatibility = 13
-targetCompatibility = 13
+sourceCompatibility = 14
+targetCompatibility = 14
 
 group = 'org.evelyn.library'
 
@@ -28,32 +28,23 @@ dependencies {
 publishing {
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
+            name = "nexus"
+            url = uri("https://nexus.evelyn.internal/repository/ephyra-dev/")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
-                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+                username = System.getenv("NEXUS_USER")
+                password = System.getenv("NEXUS_PASSWORD")
             }
         }
     }
     publications {
-        maven(MavenPublication) {
-            version = 'dev-local' // Publish a rolling dev-local version
-            from components.java
-        }
-        gpr(MavenPublication) {
-            version = 'dev-4' // Publish a dev version (gpr does not support rolling nicely)
+        nexus(MavenPublication) {
+            version = '0.1.0-SNAPSHOT'
             from(components.java)
         }
     }
 }
 
-task localPublish {
+task remotePublish {
     group = 'evelyn'
-    dependsOn publishToMavenLocal
-}
-
-task gitHubPublish {
-    group = 'evelyn'
-    dependsOn publishGprPublicationToGitHubPackagesRepository
+    dependsOn publishNexusPublicationToNexusRepository
 }

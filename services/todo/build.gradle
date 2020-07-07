@@ -4,12 +4,8 @@ subprojects {
     repositories {
         jcenter()
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/EphyraSoftware/evelyn-service")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
-                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
-            }
+            name = "Nexus"
+            url = uri("https://nexus.evelyn.internal:443/registry/ephyra")
         }
         mavenLocal()
     }
@@ -129,10 +125,8 @@ task buildImage(type: Exec) {
             // Note that coping the .gradle directory doesn't work due to locks so project sources are copied and built
             // from a working directory.
             '--path', 'work',
-            '--env', 'BP_JAVA_VERSION=13.*',
-            '--env', "GPR_USER=${project.findProperty("gpr.user") ?: System.getenv("GPR_USER")}",
-            '--env', "GPR_API_KEY=${project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")}",
-            '--env', 'LIBRARY_AUTHENTICATION_VERSION=dev-3'
+            '--env', 'BP_JVM_VERSION=14.*',
+            '--env', 'LIBRARY_AUTHENTICATION_VERSION=0.1.0-SNAPSHOT'
 }
 
 task copyWebAppBuild(type: Copy) {
@@ -154,9 +148,9 @@ task gitHubDockerLogin(type: Exec) {
     description 'Log into the GitHub\'s Docker package repository.'
 
     commandLine 'cmd', '/c', 'docker', 'login',
-            'docker.pkg.github.com',
-            '-u', project.findProperty("gpr.user") ?: System.getenv("GPR_USER"),
-            '-p', project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            'registry.evelyn.internal',
+            '-u', project.findProperty("registry.user") ?: System.getenv("REGISTRY_USERNAME"),
+            '-p', project.findProperty("registry.key") ?: System.getenv("REGISTRY_PASSWORD")
 }
 
 task gitHubDockerTag(type: Exec) {
@@ -166,7 +160,7 @@ task gitHubDockerTag(type: Exec) {
 
     commandLine 'cmd', '/c', 'docker', 'tag',
             project.name,
-            "docker.pkg.github.com/ephyrasoftware/evelyn-service/${project.name}:dev"
+            "registry.evelyn.internal/ephyrasoftware/${project.name}:dev"
 }
 
 task gitHubDockerPush(type: Exec) {
@@ -176,5 +170,5 @@ task gitHubDockerPush(type: Exec) {
     dependsOn project.tasks.findByName('gitHubDockerTag')
 
     commandLine 'cmd', '/c', 'docker', 'push',
-            "docker.pkg.github.com/ephyrasoftware/evelyn-service/${project.name}:dev"
+            "registry.evelyn.internal/ephyrasoftware/${project.name}:dev"
 }
