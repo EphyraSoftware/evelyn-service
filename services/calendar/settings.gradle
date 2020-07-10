@@ -2,4 +2,4 @@ rootProject.name = 'evelyn-calendar-service'
 
 include ':evelyn-service',
         ':rest-api',
-        'web-app'
+        ':web-app'
