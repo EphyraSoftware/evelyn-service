@@ -13,5 +13,3 @@ file('services').listFiles().each { File moduleBuild ->
 
     includeBuild moduleBuild
 }
-
-includeBuild 'server/evelyn-web-entry-point'
