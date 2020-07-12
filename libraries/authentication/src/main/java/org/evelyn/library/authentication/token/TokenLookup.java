@@ -1,24 +1,15 @@
 package org.evelyn.library.authentication.token;
 
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TokenLookup {
-  @SuppressWarnings("unchecked")
-  public TokenInfo getTokenInfo() {
-    KeycloakAuthenticationToken authentication =
-            (KeycloakAuthenticationToken) SecurityContextHolder
-                    .getContext()
-                    .getAuthentication();
+  public TokenInfo getTokenInfo(Jwt token) {
+    if (!token.getClaims().containsKey("email")) {
+      throw new SecurityException("Will not accept a token without an email claim");
+    }
 
-    KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipal =
-            (KeycloakPrincipal<KeycloakSecurityContext>) authentication
-                    .getPrincipal();
-
-    return new TokenInfo(keycloakPrincipal.getKeycloakSecurityContext().getToken());
+    return new TokenInfo(token.getSubject(), token.getClaimAsString("email"));
   }
 }

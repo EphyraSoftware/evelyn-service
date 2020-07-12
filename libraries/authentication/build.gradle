@@ -8,8 +8,7 @@ repositories {
 }
 
 ext {
-    keycloakSpringVersion = '4.0.0.Final'
-    springBootVersion = '2.2.0.RELEASE'
+    springFrameworkVersion = '5.3.3.RELEASE'
 }
 
 sourceCompatibility = 14
@@ -18,11 +17,7 @@ targetCompatibility = 14
 group = 'org.evelyn.library'
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.keycloak/keycloak-spring-boot-2-starter
-    implementation group: 'org.keycloak', name: 'keycloak-spring-boot-2-starter', version: "${keycloakSpringVersion}"
-
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${springBootVersion}"
+    compileOnly  group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: "${springFrameworkVersion}"
 }
 
 publishing {
@@ -38,7 +33,7 @@ publishing {
     }
     publications {
         nexus(MavenPublication) {
-            version = '0.1.0-SNAPSHOT'
+            version = '0.1.1-SNAPSHOT'
             from(components.java)
         }
     }
