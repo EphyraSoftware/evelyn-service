@@ -26,13 +26,6 @@ org:
       mongo-connection-string: ${MONGO_CONNECTION_URI}
       email-input-queue-name: send-mail
 
-#keycloak:
-#  auth-server-url: ${KEYCLOAK_AUTH_URL}
-#  realm: evelyn-services-realm
-#  public-client: true
-#  resource: evelyn-ui
-#  principal-attribute: sub
-
 logging:
   level:
     root: DEBUG
