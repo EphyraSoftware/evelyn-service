@@ -4,6 +4,11 @@ spring:
   rabbitmq:
     port: 9082
     virtual-host: evelyn_vhost
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://keycloak.evelyn.internal/auth/realms/evelyn-services-realm
 
 org:
   evelyn:

@@ -13,6 +13,11 @@ spring:
     host: ${RABBITMQ_HOST}
     port: ${RABBITMQ_PORT}
     virtual-host: evelyn_vhost
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://keycloak.evelyn.internal/auth/realms/evelyn-services-realm
 
 org:
   evelyn:
@@ -21,9 +26,13 @@ org:
       mongo-connection-string: ${MONGO_CONNECTION_URI}
       email-input-queue-name: send-mail
 
-keycloak:
-  auth-server-url: ${KEYCLOAK_AUTH_URL}
-  realm: evelyn-services-realm
-  public-client: true
-  resource: evelyn-ui
-  principal-attribute: sub
+#keycloak:
+#  auth-server-url: ${KEYCLOAK_AUTH_URL}
+#  realm: evelyn-services-realm
+#  public-client: true
+#  resource: evelyn-ui
+#  principal-attribute: sub
+
+logging:
+  level:
+    root: DEBUG
