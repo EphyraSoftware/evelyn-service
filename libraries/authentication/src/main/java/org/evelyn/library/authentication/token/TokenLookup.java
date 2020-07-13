@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenLookup {
   public TokenInfo getTokenInfo(Jwt token) {
+    if (token == null) {
+      throw new SecurityException("Missing authentication token");
+    }
+
     if (!token.getClaims().containsKey("email")) {
       throw new SecurityException("Will not accept a token without an email claim");
     }
