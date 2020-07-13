@@ -8,15 +8,15 @@ server:
     trust-store: /etc/evelyn/truststore.p12
     trust-store-password: changeit
 
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://keycloak.evelyn.internal/auth/realms/evelyn-services-realm
+
 org:
   evelyn:
     tlsEnabled: true
     todo:
       mongo-connection-string: ${MONGO_CONNECTION_URI}
-
-keycloak:
-  auth-server-url: ${KEYCLOAK_AUTH_URL}
-  realm: evelyn-services-realm
-  public-client: true
-  resource: evelyn-ui
-  principal-attribute: sub
