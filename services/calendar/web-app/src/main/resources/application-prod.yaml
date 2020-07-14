@@ -9,12 +9,6 @@ server:
     trust-store-password: changeit
 
 spring:
-  rabbitmq:
-    host: ${RABBITMQ_HOST}
-    port: ${RABBITMQ_PORT}
-    virtual-host: evelyn_vhost
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
   servlet:
     multipart:
       max-file-size: 128KB
