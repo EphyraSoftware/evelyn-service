@@ -13,6 +13,8 @@ spring:
     host: ${RABBITMQ_HOST}
     port: ${RABBITMQ_PORT}
     virtual-host: evelyn_vhost
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
   security:
     oauth2:
       resourceserver:
