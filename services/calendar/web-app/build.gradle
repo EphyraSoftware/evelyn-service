@@ -1,13 +1,14 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.0.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.springframework.boot' version '2.3.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 
 dependencies {
     runtimeOnly project(':rest-api')
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+    compileOnly group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: "${springSecurityVersion}"
+
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 
-    implementation group: 'org.evelyn.library', name: 'authentication', version: "${libraryAuthenticationVersion}"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
 }

@@ -15,7 +15,6 @@ import org.evelyn.services.calendar.impl.model.CalendarEvent;
 import org.evelyn.services.calendar.impl.model.EvelynCalendar;
 import org.evelyn.services.calendar.impl.model.ExchangeMeta;
 import org.evelyn.services.calendar.impl.model.ICalendarItem;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class EvelynCalendarService implements CalendarService {
   }
 
   private ProfileModel getProfileModel() {
-    ResponseEntity<ProfileModel> currentProfileResponse = profileServiceClient.getCurrentProfile();
+    var currentProfileResponse = profileServiceClient.getCurrentProfile();
     if (currentProfileResponse.getBody() == null) {
       throw new RuntimeException("Unable to get profile.");
     }

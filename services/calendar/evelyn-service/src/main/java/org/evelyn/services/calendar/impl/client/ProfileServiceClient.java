@@ -1,18 +1,18 @@
 package org.evelyn.services.calendar.impl.client;
 
-import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component("calendarProfileServiceClient")
 public class ProfileServiceClient {
   @Value("${org.evelyn.calendar.profile-service-url}")
   private String userServiceUrl;
 
-  private final KeycloakRestTemplate restTemplate;
+  private final RestTemplate restTemplate;
 
-  public ProfileServiceClient(KeycloakRestTemplate restTemplate) {
+  public ProfileServiceClient(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
   }
 
