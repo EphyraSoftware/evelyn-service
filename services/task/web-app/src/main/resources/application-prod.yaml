@@ -20,7 +20,6 @@ org:
     tlsEnabled: true
     task:
       mongo-connection-string: ${MONGO_CONNECTION_URI}
-      profile-service-url: ${PROFILE_SERVICE_BASE_URL}
 
 logging:
   level:

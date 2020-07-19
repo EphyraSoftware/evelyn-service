@@ -7,7 +7,7 @@ COPY evelyn-service/ ./evelyn-service
 COPY rest-api/ ./rest-api
 COPY web-app/ ./web-app
 
-RUN gradle build --no-daemon
+RUN gradle build -x test --no-daemon
 
 FROM openjdk:14-alpine
 

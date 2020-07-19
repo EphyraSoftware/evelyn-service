@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+org:
+  evelyn:
+    tlsEnabled: false
+    task:
+      mongo-connection-string:
+
+logging:
+  level:
+    root: DEBUG
